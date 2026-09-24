@@ -1,0 +1,111 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:gateway_name",
+ "creation": "2026-01-24 15:22:27.621520",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "is_active",
+  "gateway_name",
+  "provider_code",
+  "payment_flow",
+  "supports_refund",
+  "supports_webhook",
+  "notes",
+  "supported_payment_modes_section",
+  "supported_payment_modes"
+ ],
+ "fields": [
+  {
+   "fieldname": "gateway_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Gateway Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "is active"
+  },
+  {
+   "default": "0",
+   "fieldname": "supports_refund",
+   "fieldtype": "Check",
+   "label": "Supports Refund"
+  },
+  {
+   "default": "0",
+   "fieldname": "supports_webhook",
+   "fieldtype": "Check",
+   "label": "Supports Webhook"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Data",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "supported_payment_modes_section",
+   "fieldtype": "Section Break",
+   "label": "Supported Payment Modes"
+  },
+  {
+   "fieldname": "supported_payment_modes",
+   "fieldtype": "Table",
+   "options": "Payment Provider Supported Payment Mode"
+  },
+  {
+   "fieldname": "provider_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Provider Code",
+   "reqd": 1
+  },
+  {
+   "default": "ONLINE",
+   "fieldname": "payment_flow",
+   "fieldtype": "Select",
+   "label": "Payment Flow",
+   "options": "\nONLINE\nCOD\nOFFLINE"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-02-03 10:28:16.097653",
+ "modified_by": "Administrator",
+ "module": "Impressio",
+ "name": "Payment Provider",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

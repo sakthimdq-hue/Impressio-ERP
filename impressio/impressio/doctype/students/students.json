@@ -1,0 +1,364 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{enrollment_number}-{first_name}-{######}",
+ "creation": "2025-11-28 16:37:15.223332",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "is_new_student",
+  "section_break_tqsa",
+  "school_code",
+  "enrollment_number",
+  "first_name",
+  "middle_name",
+  "last_name",
+  "grade",
+  "section",
+  "is_verified",
+  "column_break_uzxr",
+  "joining_date",
+  "house_color",
+  "medium",
+  "curriculum",
+  "shoe_size",
+  "shirt_size",
+  "trouser_size",
+  "profile_picture_attach",
+  "profile_picture_view",
+  "personal_details_section",
+  "student_email_id",
+  "date_of_birth",
+  "blood_group",
+  "column_break_jlxf",
+  "student_mobile_number",
+  "gender",
+  "nationality",
+  "address_contact",
+  "section_break_qtfz",
+  "student_billing_addresses",
+  "section_break_bjnz",
+  "student_shipping_addresses",
+  "relations_tab",
+  "guardians_details_section",
+  "guardians",
+  "sibling_details_section",
+  "siblings",
+  "customer_details_tab",
+  "customer_details_section",
+  "column_break_zibi",
+  "customer",
+  "column_break_yedd",
+  "customer_group",
+  "dashboard_tab",
+  "student_orders_section",
+  "student_dashboard",
+  "subject_group_tab",
+  "subject_group_section",
+  "subject_group"
+ ],
+ "fields": [
+  {
+   "fieldname": "address_contact",
+   "fieldtype": "Tab Break",
+   "label": "Address & Contact"
+  },
+  {
+   "fieldname": "relations_tab",
+   "fieldtype": "Tab Break",
+   "label": "Relations"
+  },
+  {
+   "fieldname": "guardians_details_section",
+   "fieldtype": "Section Break",
+   "label": "Guardians Details"
+  },
+  {
+   "fieldname": "guardians",
+   "fieldtype": "Table",
+   "label": "Guardians",
+   "options": "Student Guardians"
+  },
+  {
+   "fieldname": "sibling_details_section",
+   "fieldtype": "Section Break",
+   "label": "Sibling Details"
+  },
+  {
+   "fieldname": "siblings",
+   "fieldtype": "Table",
+   "label": "Siblings",
+   "options": "Students Siblings"
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "section_break_tqsa",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "First Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "middle_name",
+   "fieldtype": "Data",
+   "label": "Middle Name"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "grade",
+   "fieldtype": "Link",
+   "label": "Grade",
+   "options": "Grade"
+  },
+  {
+   "fieldname": "section",
+   "fieldtype": "Data",
+   "label": "Section"
+  },
+  {
+   "fieldname": "column_break_uzxr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "joining_date",
+   "fieldtype": "Date",
+   "label": "Joining Date"
+  },
+  {
+   "fieldname": "profile_picture_attach",
+   "fieldtype": "Attach Image",
+   "label": "Profile Picture Attach"
+  },
+  {
+   "fieldname": "profile_picture_view",
+   "fieldtype": "Image",
+   "label": "Profile Picture View",
+   "options": "profile_picture_attach"
+  },
+  {
+   "fieldname": "personal_details_section",
+   "fieldtype": "Section Break",
+   "label": "Personal Details"
+  },
+  {
+   "fieldname": "date_of_birth",
+   "fieldtype": "Date",
+   "label": "Date of Birth"
+  },
+  {
+   "fieldname": "blood_group",
+   "fieldtype": "Select",
+   "label": "Blood Group",
+   "options": "\nA+\nA-\nB+\nB-\nO+\nO-\nAB+\nAB-"
+  },
+  {
+   "fieldname": "column_break_jlxf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "student_mobile_number",
+   "fieldtype": "Data",
+   "label": "Student Mobile Number"
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Link",
+   "label": "Gender",
+   "options": "Gender",
+   "reqd": 1
+  },
+  {
+   "default": "India",
+   "fieldname": "nationality",
+   "fieldtype": "Data",
+   "label": "Nationality"
+  },
+  {
+   "fieldname": "customer_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Customer Details"
+  },
+  {
+   "fieldname": "customer_group",
+   "fieldtype": "Link",
+   "label": "Customer Group",
+   "options": "Customer Group"
+  },
+  {
+   "fieldname": "column_break_zibi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_yedd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "enrollment_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Enrollment Number",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_details_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Details"
+  },
+  {
+   "fieldname": "school_code",
+   "fieldtype": "Data",
+   "label": "School Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "student_email_id",
+   "fieldtype": "Data",
+   "label": "Student Email Address",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_qtfz",
+   "fieldtype": "Section Break",
+   "label": "Billing Addresss"
+  },
+  {
+   "fieldname": "section_break_bjnz",
+   "fieldtype": "Section Break",
+   "label": "Shipping Address"
+  },
+  {
+   "fieldname": "student_billing_addresses",
+   "fieldtype": "Table",
+   "options": "Student Billing Address"
+  },
+  {
+   "fieldname": "student_shipping_addresses",
+   "fieldtype": "Table",
+   "options": "Student Shipping Address"
+  },
+  {
+   "fieldname": "student_orders_section",
+   "fieldtype": "Section Break",
+   "label": "Student Orders"
+  },
+  {
+   "fieldname": "house_color",
+   "fieldtype": "Data",
+   "label": "House Color"
+  },
+  {
+   "fieldname": "medium",
+   "fieldtype": "Data",
+   "label": "Medium"
+  },
+  {
+   "fieldname": "curriculum",
+   "fieldtype": "Data",
+   "label": "Curriculum"
+  },
+  {
+   "fieldname": "subject_group_tab",
+   "fieldtype": "Tab Break",
+   "label": "Subject Group"
+  },
+  {
+   "fieldname": "subject_group_section",
+   "fieldtype": "Section Break",
+   "label": "Subject Group"
+  },
+  {
+   "fieldname": "subject_group",
+   "fieldtype": "Table",
+   "options": "Student Subject Groups"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_verified",
+   "fieldtype": "Check",
+   "label": "is Verified",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_new_student",
+   "fieldtype": "Check",
+   "label": "Is New Student"
+  },
+  {
+   "fieldname": "shoe_size",
+   "fieldtype": "Data",
+   "label": "Shoe Size"
+  },
+  {
+   "fieldname": "shirt_size",
+   "fieldtype": "Data",
+   "label": "Shirt Size"
+  },
+  {
+   "fieldname": "trouser_size",
+   "fieldtype": "Data",
+   "label": "Trouser Size"
+  },
+  {
+   "fieldname": "student_dashboard",
+   "fieldtype": "HTML"
+  },
+  {
+   "fieldname": "dashboard_tab",
+   "fieldtype": "Tab Break",
+   "label": "Dashboard"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-03-10 10:28:44.310659",
+ "modified_by": "Administrator",
+ "module": "Impressio",
+ "name": "Students",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

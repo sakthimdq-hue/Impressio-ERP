@@ -1,0 +1,173 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-09-24 15:42:21.665756",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "spoc_name",
+  "contact",
+  "user",
+  "meeting_type",
+  "assigned_email",
+  "assigned_user_list",
+  "column_break_nzmq",
+  "date_and_time",
+  "email",
+  "designation",
+  "add_meeting",
+  "spoc_uid",
+  "column_break_llia",
+  "description",
+  "section_break_llor",
+  "date_of_birth",
+  "column_break_tpzc",
+  "work_anniversary",
+  "marriage_anniversary"
+ ],
+ "fields": [
+  {
+   "fieldname": "spoc_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "SPOC Name"
+  },
+  {
+   "default": "+91-",
+   "fieldname": "contact",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Contact",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "designation",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Designation"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "meeting_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Meeting Type",
+   "link_filters": "[[\"Lead Meeting Type\",\"status\",\"=\",\"Active\"]]",
+   "options": "Lead Meeting Type"
+  },
+  {
+   "fieldname": "date_and_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Date & Time"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Long Text",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Description"
+  },
+  {
+   "fieldname": "date_of_birth",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Date of Birth"
+  },
+  {
+   "fieldname": "column_break_nzmq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "spoc_uid",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Spoc Uid"
+  },
+  {
+   "fieldname": "add_meeting",
+   "fieldtype": "Button",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Add Meeting"
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "User",
+   "options": "User"
+  },
+  {
+   "fieldname": "assigned_email",
+   "fieldtype": "Table MultiSelect",
+   "label": "Assigned Email",
+   "options": "Assigned User Table"
+  },
+  {
+   "fieldname": "assigned_user_list",
+   "fieldtype": "Long Text",
+   "hidden": 1,
+   "label": "Assigned user list",
+   "print_hide": 1,
+   "report_hide": 1
+  },
+  {
+   "fieldname": "column_break_llia",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_llor",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_tpzc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "work_anniversary",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Work Anniversary"
+  },
+  {
+   "fieldname": "marriage_anniversary",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Marriage Anniversary"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-12-12 13:19:04.034976",
+ "modified_by": "Administrator",
+ "module": "Impressio",
+ "name": "SPOC Child Table",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

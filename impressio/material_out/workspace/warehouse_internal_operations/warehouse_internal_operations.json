@@ -1,0 +1,96 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"zPsAXP7CPh\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Rack Identification\",\"col\":3}},{\"id\":\"5QCCEP_pRj\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Assign Item-wise Storage Location \",\"col\":3}},{\"id\":\"uJAfHqda4P\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Putaway for Bulk Storage\",\"col\":3}},{\"id\":\"p452QhvIhe\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Putaway to Racks/Bins\",\"col\":3}},{\"id\":\"olJJMHsTW9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Rotation of Products\",\"col\":3}},{\"id\":\"kD8GSn-LYU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Putaway of Bundles\",\"col\":3}},{\"id\":\"Dz808QVkQy\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Product Bundle Creation\",\"col\":3}},{\"id\":\"FTF26NV81E\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pickslip Genration\",\"col\":3}}]",
+ "creation": "2025-12-29 16:54:46.402270",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "quantity-1",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Warehouse Internal Operations",
+ "links": [],
+ "modified": "2026-03-10 17:08:40.788444",
+ "modified_by": "Administrator",
+ "module": "Material Out",
+ "name": "Warehouse Internal Operations",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 23.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Putaway for Bulk Storage",
+   "link_to": "Stock Entry",
+   "stats_filter": "[[\"Stock Entry\",\"custom_stock_transaction_type\",\"=\",\"Putaway for Bulk Storage\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Putaway to Racks/Bins",
+   "link_to": "Stock Entry",
+   "stats_filter": "[[\"Stock Entry\",\"custom_stock_transaction_type\",\"=\",\"Putaway to Racks Bins\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Rotation of Products",
+   "link_to": "Stock Entry",
+   "stats_filter": "[[\"Stock Entry\",\"custom_stock_transaction_type\",\"=\",\"Rotation of Products\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Putaway of Bundles",
+   "link_to": "Stock Entry",
+   "stats_filter": "[[\"Stock Entry\",\"custom_stock_transaction_type\",\"=\",\"Putaway of Bundles\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Product Bundle Creation",
+   "link_to": "BOM",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Rack Identification",
+   "link_to": "Warehouse",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Pickslip Genration",
+   "link_to": "Stock Entry",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Assign Item-wise Storage Location ",
+   "link_to": "Item",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Warehouse Internal Operations",
+ "is_standard": 1,
+ "app": "impressio"
+}

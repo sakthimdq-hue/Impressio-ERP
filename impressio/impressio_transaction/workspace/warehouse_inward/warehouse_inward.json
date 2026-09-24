@@ -1,0 +1,92 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"0AJ7ZIbBn1\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Your Shortcuts</span>\",\"col\":12}},{\"id\":\"oAMCJewy6j\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Purchase Order\",\"col\":3}},{\"id\":\"dfCrxL7JKZ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Asn Creation\",\"col\":3}},{\"id\":\"o02m-880yb\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Gate Entry\",\"col\":3}},{\"id\":\"-_9qwdvgED\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Gate Pass\",\"col\":3}},{\"id\":\"g27yW0OdP9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Physical Inspection For Unloading\",\"col\":3}},{\"id\":\"50ovwEjqMb\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"GRN\",\"col\":3}},{\"id\":\"7V7S0F3tvB\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"QC Release\",\"col\":3}}]",
+ "creation": "2025-12-10 13:41:47.339648",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "education",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Warehouse Inward",
+ "links": [],
+ "modified": "2026-03-10 17:08:38.962381",
+ "modified_by": "Administrator",
+ "module": "Impressio Transaction",
+ "name": "Warehouse Inward",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "All"
+  }
+ ],
+ "sequence_id": 21.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Purchase Order",
+   "link_to": "Purchase Order",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "QC Release",
+   "link_to": "Quality Inspection",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Gate Pass",
+   "link_to": "Gate Pass",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Physical Inspection For Unloading",
+   "link_to": "Physical Inspection For Unloading",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Asn Creation",
+   "link_to": "ASN Creation",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "GRN",
+   "link_to": "Purchase Receipt",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Gate Entry",
+   "link_to": "Gate Entry",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Warehouse Inward",
+ "is_standard": 1,
+ "app": "impressio"
+}

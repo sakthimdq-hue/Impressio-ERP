@@ -1,0 +1,158 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-11-27 18:44:14.757322",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "grade",
+  "existing_books",
+  "bundle_name",
+  "sub_bundle_name",
+  "product_name",
+  "qty",
+  "cost_price",
+  "fixed_margin",
+  "parent_child_row",
+  "column_break_kftp",
+  "organization_price",
+  "organization_margin_price",
+  "organization_mrp",
+  "customer_discount",
+  "display_price"
+ ],
+ "fields": [
+  {
+   "fieldname": "parent_child_row",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "parent child row",
+   "read_only": 1
+  },
+  {
+   "fieldname": "grade",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Grade",
+   "options": "Grade",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_kftp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "existing_books",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Existing Books",
+   "read_only": 1
+  },
+  {
+   "fieldname": "bundle_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Bundle Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sub_bundle_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Sub Bundle Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "product_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Product Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "organization_price",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Organization Price",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cost_price",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Cost Price",
+   "read_only": 1
+  },
+  {
+   "fieldname": "fixed_margin",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Fixed Margin %",
+   "read_only": 1
+  },
+  {
+   "fieldname": "organization_margin_price",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Organization Margin %",
+   "read_only": 1
+  },
+  {
+   "fieldname": "organization_mrp",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Organization MRP",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer_discount",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Customer Discount %",
+   "read_only": 1
+  },
+  {
+   "fieldname": "display_price",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Display Price",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-01-02 15:19:54.080207",
+ "modified_by": "Administrator",
+ "module": "Impressio",
+ "name": "School Books Costing Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

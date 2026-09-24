@@ -1,0 +1,135 @@
+{
+    "doctype": "DocType",
+    "name": "Ekart Settings",
+    "module": "Material Out",
+    "custom": 0,
+    "is_single": 1,
+    "autoname": "Ekart Settings",
+    "fields": [
+        {
+            "fieldname": "section_authentication",
+            "fieldtype": "Section Break",
+            "label": "Authentication"
+        },
+        {
+            "fieldname": "environment",
+            "fieldtype": "Select",
+            "label": "Environment",
+            "options": "Sandbox\nProduction",
+            "default": "Sandbox"
+        },
+        {
+            "fieldname": "client_id",
+            "fieldtype": "Data",
+            "label": "Client ID"
+        },
+        {
+            "fieldname": "client_secret",
+            "fieldtype": "Data",
+            "label": "Client Secret",
+            "password": 1
+        },
+        {
+            "fieldname": "use_mock_api",
+            "fieldtype": "Check",
+            "label": "Use Mock API (Testing)",
+            "default": 1
+        },
+        {
+            "fieldname": "column_break_auth",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "auth_token",
+            "fieldtype": "Data",
+            "label": "Auth Token",
+            "read_only": 1
+        },
+        {
+            "fieldname": "token_expiry",
+            "fieldtype": "Datetime",
+            "label": "Token Expiry",
+            "read_only": 1
+        },
+        {
+            "fieldname": "api_base_url",
+            "fieldtype": "Data",
+            "label": "API Base URL",
+            "read_only": 1
+        },
+        {
+            "fieldname": "section_warehouse",
+            "fieldtype": "Section Break",
+            "label": "Warehouse Details"
+        },
+        {
+            "fieldname": "warehouse_pincode",
+            "fieldtype": "Data",
+            "label": "Warehouse Pincode",
+            "default": "560001"
+        },
+        {
+            "fieldname": "warehouse_address",
+            "fieldtype": "Text",
+            "label": "Warehouse Address",
+            "default": "Default Warehouse Address"
+        },
+        {
+            "fieldname": "warehouse_city",
+            "fieldtype": "Data",
+            "label": "Warehouse City",
+            "default": "Bangalore"
+        },
+        {
+            "fieldname": "column_break_warehouse",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "warehouse_state",
+            "fieldtype": "Data",
+            "label": "Warehouse State",
+            "default": "Karnataka"
+        },
+        {
+            "fieldname": "warehouse_country",
+            "fieldtype": "Data",
+            "label": "Warehouse Country",
+            "default": "India"
+        },
+        {
+            "fieldname": "warehouse_phone",
+            "fieldtype": "Data",
+            "label": "Warehouse Phone",
+            "default": "9999999999"
+        },
+        {
+            "fieldname": "section_webhook",
+            "fieldtype": "Section Break",
+            "label": "Webhook Settings"
+        },
+        {
+            "fieldname": "webhook_secret",
+            "fieldtype": "Data",
+            "label": "Webhook Secret",
+            "password": 1
+        },
+        {
+            "fieldname": "webhook_url",
+            "fieldtype": "Data",
+            "label": "Webhook URL",
+            "read_only": 1
+        }
+    ],
+    "permissions": [
+        {
+            "role": "System Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1,
+            "delete": 1,
+            "submit": 1,
+            "cancel": 1,
+            "amend": 1
+        }
+    ]
+}

@@ -1,0 +1,189 @@
+{
+ "actions": [],
+ "allow_events_in_timeline": 1,
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "naming_series:naming_series",
+ "creation": "2025-10-31 11:47:03.586453",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "asn_details_section",
+  "naming_series",
+  "vendor_code",
+  "po_no",
+  "asn_date",
+  "pr_number",
+  "vehicle_no",
+  "departure_date_time",
+  "column_break_nfzl",
+  "vendor_name",
+  "po_date",
+  "pr_date",
+  "delivery_person",
+  "asn_status",
+  "arrival_date_time",
+  "product_details_section",
+  "product_table",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "asn_details_section",
+   "fieldtype": "Section Break",
+   "label": "ASN Details"
+  },
+  {
+   "fieldname": "vendor_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Vendor code",
+   "options": "Supplier",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "po_no",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Po No",
+   "options": "Purchase Order",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_nfzl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "vendor_code.supplier_name",
+   "fieldname": "vendor_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Vendor Name ",
+   "read_only": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "asn_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "ASN Date",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "po_no.transaction_date",
+   "fieldname": "po_date",
+   "fieldtype": "Date",
+   "label": "Po Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "pr_number",
+   "fieldtype": "Data",
+   "label": "PR Number"
+  },
+  {
+   "fieldname": "asn_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "ASN Status",
+   "options": "In Progress\nCompleted"
+  },
+  {
+   "fieldname": "vehicle_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Vehicle No"
+  },
+  {
+   "fieldname": "delivery_person",
+   "fieldtype": "Data",
+   "label": "Delivery Person"
+  },
+  {
+   "fieldname": "pr_date",
+   "fieldtype": "Date",
+   "label": "PR Date"
+  },
+  {
+   "fieldname": "departure_date_time",
+   "fieldtype": "Datetime",
+   "label": "Departure Date Time"
+  },
+  {
+   "fieldname": "arrival_date_time",
+   "fieldtype": "Datetime",
+   "label": "Arrival Date Time"
+  },
+  {
+   "fieldname": "product_details_section",
+   "fieldtype": "Section Break",
+   "label": "Product Details"
+  },
+  {
+   "default": "ASN-MAI-.###",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming Series",
+   "options": "ASN-MAI-.###",
+   "print_hide": 1,
+   "report_hide": 1,
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "ASN Creation",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "product_table",
+   "fieldtype": "Table",
+   "options": "ASN Child Table"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_calendar_and_gantt": 1,
+ "is_submittable": 1,
+ "links": [],
+ "make_attachments_public": 1,
+ "modified": "2025-12-10 16:03:15.663353",
+ "modified_by": "Administrator",
+ "module": "Impressio Transaction",
+ "name": "ASN Creation",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "name",
+ "sort_order": "ASC",
+ "states": []
+}

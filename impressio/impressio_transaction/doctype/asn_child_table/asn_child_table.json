@@ -1,0 +1,110 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-10-31 11:52:19.468749",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "product_code",
+  "product_name",
+  "po_no",
+  "po_date",
+  "po_quantity",
+  "column_break_qhfx",
+  "pending_qty",
+  "delivered_qty",
+  "status"
+ ],
+ "fields": [
+  {
+   "columns": 2,
+   "fieldname": "product_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Product Code ",
+   "options": "Item",
+   "search_index": 1
+  },
+  {
+   "columns": 2,
+   "fetch_from": "product_code.item_name",
+   "fieldname": "product_name",
+   "fieldtype": "Data",
+   "label": "Product Name",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "po_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Po Quantity",
+   "non_negative": 1,
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_qhfx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "columns": 2,
+   "fieldname": "po_no",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Po No ",
+   "options": "Purchase Order",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "po_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Po Date",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "delivered_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Delivered Qty ",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "columns": 1,
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "\nPartially completed\nCompleted"
+  },
+  {
+   "columns": 1,
+   "fieldname": "pending_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Pending Qty",
+   "non_negative": 1,
+   "precision": "2",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-11-13 19:24:43.282240",
+ "modified_by": "Administrator",
+ "module": "Impressio Transaction",
+ "name": "ASN Child Table",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,142 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:coupon_code",
+ "creation": "2026-01-28 19:20:47.048091",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "is_active",
+  "coupon_code",
+  "school",
+  "student",
+  "start_datetime",
+  "end_datetime",
+  "column_break_yjak",
+  "one_time_use",
+  "can_use_multiple_times",
+  "discount_type",
+  "discount",
+  "maximum_discount_amount",
+  "section_break_basv",
+  "redeemed_customers"
+ ],
+ "fields": [
+  {
+   "fieldname": "coupon_code",
+   "fieldtype": "Data",
+   "label": "Coupon Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "school",
+   "fieldtype": "Link",
+   "label": "School",
+   "options": "School"
+  },
+  {
+   "fieldname": "student",
+   "fieldtype": "Link",
+   "label": "Student",
+   "options": "Students"
+  },
+  {
+   "default": "Fixed",
+   "fieldname": "discount_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Discount Type",
+   "options": "Fixed\nPercentage",
+   "reqd": 1
+  },
+  {
+   "fieldname": "discount",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Discount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_yjak",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "start_datetime",
+   "fieldtype": "Datetime",
+   "label": "Start Datetime"
+  },
+  {
+   "fieldname": "end_datetime",
+   "fieldtype": "Datetime",
+   "label": "End Datetime"
+  },
+  {
+   "fieldname": "maximum_discount_amount",
+   "fieldtype": "Int",
+   "label": "Maximum Discount Amount"
+  },
+  {
+   "default": "0",
+   "fieldname": "can_use_multiple_times",
+   "fieldtype": "Check",
+   "label": "Customer can use multiple times"
+  },
+  {
+   "fieldname": "section_break_basv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "redeemed_customers",
+   "fieldtype": "HTML",
+   "label": "Redeemed Customers"
+  },
+  {
+   "default": "1",
+   "fieldname": "one_time_use",
+   "fieldtype": "Check",
+   "label": "One time use"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-02-19 12:52:32.476817",
+ "modified_by": "Administrator",
+ "module": "Impressio",
+ "name": "Website Cart Coupon",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

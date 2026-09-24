@@ -1,0 +1,120 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"jURlK28oPM\",\"type\":\"header\",\"data\":{\"text\":\"<span style=\\\"font-size: 18px; letter-spacing: 0.18px;\\\"><b>Masters</b></span>\",\"col\":12}},{\"id\":\"dFGVz5gp8N\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Supplier Master\",\"col\":3}},{\"id\":\"jSopJyUUeZ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Master\",\"col\":3}},{\"id\":\"nA39jxDs4J\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer Master\",\"col\":3}},{\"id\":\"1gpWP51XJ5\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"></span><span class=\\\"h2\\\"><span class=\\\"h4\\\">Purchase</span></span>\",\"col\":12}},{\"id\":\"yNyKnxuCTL\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Purchase Request\",\"col\":3}},{\"id\":\"8HK5kHlH1r\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Purchase Invoice\",\"col\":3}},{\"id\":\"d70qhjX_zD\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Purchase order\",\"col\":3}},{\"id\":\"LDMWxlOg_D\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Supplier quotation comparison\",\"col\":3}},{\"id\":\"YHdAeh3a-U\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Request for Quotation \",\"col\":3}},{\"id\":\"AaMCpfo8nt\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b></b></span><span class=\\\"h3\\\">Sales</span>\",\"col\":12}},{\"id\":\"0od4cIdDAY\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sales Quotation\",\"col\":3}},{\"id\":\"LxRX8cYt-j\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sales Invoice\",\"col\":3}},{\"id\":\"Cw16Key52t\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sales Order\",\"col\":3}}]",
+ "creation": "2025-12-29 18:21:36.637335",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "retail",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Procurement",
+ "links": [],
+ "modified": "2025-12-29 19:03:33.675313",
+ "modified_by": "Administrator",
+ "module": "Impressio",
+ "name": "Procurement",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 25.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Supplier Master",
+   "link_to": "Supplier",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Purchase Request",
+   "link_to": "Material Request",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Item Master",
+   "link_to": "Item",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Purchase Invoice",
+   "link_to": "Purchase Invoice",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Customer Master",
+   "link_to": "Customer",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Purchase order",
+   "link_to": "Purchase Order",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Supplier quotation comparison",
+   "link_to": "Supplier Quotation Comparison",
+   "report_ref_doctype": "Supplier Quotation",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Request for Quotation ",
+   "link_to": "Request for Quotation",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Sales Quotation",
+   "link_to": "Quotation",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Sales Invoice",
+   "link_to": "Sales Invoice",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Sales Order",
+   "link_to": "Sales Order",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Procurement",
+ "is_standard": 1,
+ "app": "impressio"
+}

@@ -1,0 +1,37 @@
+{
+    "doctype": "DocType",
+    "name": "Ekart Tracking History",
+    "module": "Material Out",
+    "custom": 0,
+    "istable": 1,
+    "fields": [
+        {
+            "fieldname": "event_time",
+            "fieldtype": "Datetime",
+            "label": "Event Time",
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "event_type",
+            "fieldtype": "Data",
+            "label": "Event Type",
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "status",
+            "fieldtype": "Data",
+            "label": "Status",
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "location",
+            "fieldtype": "Data",
+            "label": "Location"
+        },
+        {
+            "fieldname": "remarks",
+            "fieldtype": "Text",
+            "label": "Remarks"
+        }
+    ]
+}

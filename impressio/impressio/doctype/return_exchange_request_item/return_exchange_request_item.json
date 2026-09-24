@@ -1,0 +1,108 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-03-14 19:50:31.050264",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "old_item_code",
+  "old_item_price",
+  "new_item_code",
+  "new_item_price",
+  "qty",
+  "notes",
+  "column_break_kqne",
+  "first_image",
+  "first_image_preview",
+  "second_image",
+  "second_image_preview"
+ ],
+ "fields": [
+  {
+   "fieldname": "old_item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Old Item Code",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "new_item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "New Item Code",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "qty",
+   "reqd": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "notes"
+  },
+  {
+   "fieldname": "first_image",
+   "fieldtype": "Attach Image",
+   "label": "First Image"
+  },
+  {
+   "fieldname": "second_image",
+   "fieldtype": "Attach Image",
+   "label": "Second Image"
+  },
+  {
+   "fieldname": "old_item_price",
+   "fieldtype": "Currency",
+   "label": "Old Item Price"
+  },
+  {
+   "fieldname": "new_item_price",
+   "fieldtype": "Currency",
+   "label": "New Item Price"
+  },
+  {
+   "fieldname": "column_break_kqne",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "first_image_preview",
+   "fieldtype": "Image",
+   "label": "First Image Preview",
+   "options": "first_image"
+  },
+  {
+   "fieldname": "second_image_preview",
+   "fieldtype": "Image",
+   "label": "Second Image Preview",
+   "options": "second_image"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-03-19 16:33:23.801739",
+ "modified_by": "Administrator",
+ "module": "Impressio",
+ "name": "Return Exchange Request Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

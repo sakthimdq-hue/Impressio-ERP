@@ -1,0 +1,77 @@
+{
+    "doctype": "DocType",
+    "name": "Handover Item",
+    "module": "Material Out",
+    "istable": 1,
+    "fields": [
+        {
+            "fieldname": "item_code",
+            "fieldtype": "Link",
+            "label": "Item Code",
+            "options": "Item",
+            "reqd": 1,
+            "in_list_view": 1,
+            "width": "150px"
+        },
+        {
+            "fieldname": "item_name",
+            "fieldtype": "Data",
+            "label": "Item Name",
+            "fetch_from": "item_code.item_name",
+            "read_only": 1,
+            "in_list_view": 1,
+            "width": "200px"
+        },
+        {
+            "fieldname": "qty",
+            "fieldtype": "Float",
+            "label": "Quantity",
+            "default": 1,
+            "reqd": 1,
+            "in_list_view": 1,
+            "width": "80px"
+        },
+        {
+            "fieldname": "weight_per_unit",
+            "fieldtype": "Float",
+            "label": "Unit Weight (kg)",
+            "fetch_from": "item_code.weight_per_unit",
+            "read_only": 1,
+            "precision": 3,
+            "width": "100px"
+        },
+        {
+            "fieldname": "total_weight",
+            "fieldtype": "Float",
+            "label": "Total Weight (kg)",
+            "read_only": 1,
+            "precision": 2,
+            "in_list_view": 1,
+            "width": "100px"
+        },
+        {
+            "fieldname": "item_length",
+            "fieldtype": "Float",
+            "label": "Length (cm)",
+            "fetch_from": "item_code.length",
+            "read_only": 1,
+            "precision": 1
+        },
+        {
+            "fieldname": "item_width",
+            "fieldtype": "Float",
+            "label": "Width (cm)",
+            "fetch_from": "item_code.width",
+            "read_only": 1,
+            "precision": 1
+        },
+        {
+            "fieldname": "item_height",
+            "fieldtype": "Float",
+            "label": "Height (cm)",
+            "fetch_from": "item_code.height",
+            "read_only": 1,
+            "precision": 1
+        }
+    ]
+}

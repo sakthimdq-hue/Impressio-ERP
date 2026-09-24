@@ -1,0 +1,197 @@
+{
+ "actions": [],
+ "allow_events_in_timeline": 1,
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "naming_series:naming_series",
+ "creation": "2025-10-31 13:32:25.319062",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_xqz8",
+  "naming_series",
+  "gate_entry_number",
+  "asn_no",
+  "driver_details",
+  "purchase_order_no",
+  "purchase_order_date",
+  "security_checks",
+  "value_date_time",
+  "column_break_lbyy",
+  "date_time_of_arrival",
+  "vehicle_details",
+  "vendor_code",
+  "vendor_name",
+  "approval_for_entry",
+  "status",
+  "amended_from",
+  "details_section",
+  "grn_product_detail"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_xqz8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Gate Entry",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "gate_entry_number",
+   "fieldtype": "Data",
+   "label": "Gate Entry Number",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "asn_no",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "ASN No",
+   "options": "ASN Creation",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "driver_details",
+   "fieldtype": "Data",
+   "label": "Driver Details"
+  },
+  {
+   "fetch_from": "asn_no.po_no",
+   "fieldname": "purchase_order_no",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Purchase Order No",
+   "options": "Purchase Order",
+   "read_only": 1,
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "security_checks",
+   "fieldtype": "Data",
+   "label": "Security Checks"
+  },
+  {
+   "fieldname": "value_date_time",
+   "fieldtype": "Datetime",
+   "label": "Vehicle out Date & Time"
+  },
+  {
+   "fieldname": "column_break_lbyy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_time_of_arrival",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Date & Time of arrival"
+  },
+  {
+   "fetch_from": "asn_no.vehicle_no",
+   "fieldname": "vehicle_details",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Vehicle Details",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "asn_no.vendor_name",
+   "fieldname": "vendor_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Vendor Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "asn_no.po_date",
+   "fieldname": "purchase_order_date",
+   "fieldtype": "Date",
+   "label": "Purchase Order Date"
+  },
+  {
+   "fieldname": "approval_for_entry",
+   "fieldtype": "Data",
+   "label": "Approval for Entry"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "In Progress\nCompleted"
+  },
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "grn_product_detail",
+   "fieldtype": "Table",
+   "options": "Gate Entry Child Table"
+  },
+  {
+   "default": "GE-137.-.###",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming Series",
+   "options": "GE-137.-.###",
+   "print_hide": 1,
+   "read_only": 1,
+   "report_hide": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "asn_no.vendor_code",
+   "fieldname": "vendor_code",
+   "fieldtype": "Link",
+   "label": "Vendor Code",
+   "options": "Supplier",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "make_attachments_public": 1,
+ "modified": "2025-11-21 11:54:38.540029",
+ "modified_by": "Administrator",
+ "module": "Impressio Transaction",
+ "name": "Gate Entry",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "asn_no"
+}

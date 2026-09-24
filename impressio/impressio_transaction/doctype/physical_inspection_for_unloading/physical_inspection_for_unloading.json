@@ -1,0 +1,175 @@
+{
+ "actions": [],
+ "allow_events_in_timeline": 1,
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "naming_series:naming_series",
+ "creation": "2025-11-01 13:19:14.404674",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_gxyo",
+  "naming_series",
+  "report_date",
+  "gate_entry",
+  "column_break_miag",
+  "company",
+  "status",
+  "amended_from",
+  "section_break_ghel",
+  "readings_html",
+  "readings",
+  "section_break_pfqk",
+  "new_physical_inspection",
+  "attachment",
+  "column_break_dwuw",
+  "remarks",
+  "print_settings_section",
+  "letter_head"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_gxyo",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Physical Inspection For Unloading",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "default": "MAT-QA-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "MAT-QA-.YYYY.-",
+   "print_hide": 1,
+   "read_only": 1,
+   "report_hide": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "search_index": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "report_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Report Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "\nAccepted\nPartial Accepted\nRejected",
+   "sort_options": 1
+  },
+  {
+   "fieldname": "section_break_ghel",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "readings",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Readings",
+   "options": "Physical Inspection Child Table"
+  },
+  {
+   "fieldname": "readings_html",
+   "fieldtype": "HTML",
+   "label": "Reading"
+  },
+  {
+   "fieldname": "section_break_pfqk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "attachment",
+   "fieldtype": "Attach",
+   "label": "Attachment",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_dwuw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "print_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Print Settings"
+  },
+  {
+   "fieldname": "letter_head",
+   "fieldtype": "Link",
+   "label": "Letter Head",
+   "options": "Letter Head"
+  },
+  {
+   "fieldname": "new_physical_inspection",
+   "fieldtype": "Data",
+   "label": "New Physical Inspection"
+  },
+  {
+   "fieldname": "column_break_miag",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "gate_entry",
+   "fieldtype": "Link",
+   "label": "Gate Entry",
+   "options": "Gate Entry",
+   "reqd": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "make_attachments_public": 1,
+ "modified": "2026-01-05 14:44:25.830951",
+ "modified_by": "Administrator",
+ "module": "Impressio Transaction",
+ "name": "Physical Inspection For Unloading",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_seen": 1
+}

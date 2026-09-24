@@ -1,0 +1,409 @@
+{
+    "doctype": "DocType",
+    "name": "Handover To Logistics",
+    "module": "Material Out",
+    "custom": 0,
+    "autoname": "HLG-.YY.-.MM.-.#####",
+    "naming_rule": "Expression",
+    "is_submittable": 1,
+    "show_name_in_global_search": 1,
+    "search_fields": "order_no,customer_name",
+    "title_field": "order_no",
+    "fields": [
+        {
+            "fieldname": "dispatch_order",
+            "fieldtype": "Link",
+            "label": "Dispatch Order",
+            "options": "Dispatch Of Orders",
+            "description": "Link to Dispatch Of Orders document"
+        },
+        {
+            "fieldname": "sales_order",
+            "fieldtype": "Link",
+            "label": "Sales Order",
+            "options": "Sales Order",
+            "description": "Select a Sales Order to auto-fill customer and delivery details"
+        },
+        {
+            "fieldname": "order_no",
+            "fieldtype": "Data",
+            "label": "Order No",
+            "reqd": 1,
+            "in_list_view": 1,
+            "width": "150px"
+        },
+        {
+            "fieldname": "customer_name",
+            "fieldtype": "Data",
+            "label": "Customer Name",
+            "reqd": 1,
+            "in_list_view": 1,
+            "width": "200px"
+        },
+        {
+            "fieldname": "customer_phone",
+            "fieldtype": "Data",
+            "label": "Customer Phone",
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "location",
+            "fieldtype": "Data",
+            "label": "Location",
+            "in_list_view": 1,
+            "width": "150px"
+        },
+        {
+            "fieldname": "address",
+            "fieldtype": "Text",
+            "label": "Address",
+            "reqd": 1,
+            "width": "300px"
+        },
+        {
+            "fieldname": "pincode",
+            "fieldtype": "Data",
+            "label": "Pincode",
+            "reqd": 1,
+            "width": "100px"
+        },
+        {
+            "fieldname": "state",
+            "fieldtype": "Data",
+            "label": "State",
+            "reqd": 0
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "handover_date",
+            "fieldtype": "Date",
+            "label": "Handover Date",
+            "default": "Today",
+            "reqd": 1
+        },
+        {
+            "fieldname": "handover_time",
+            "fieldtype": "Time",
+            "label": "Handover Time",
+            "default": "Now"
+        },
+        {
+            "fieldname": "logistics_partner",
+            "fieldtype": "Select",
+            "label": "Logistics Partner",
+            "options": "\nEkart\nAmazon Shipping\nShiprocket",
+            "reqd": 1
+        },
+        {
+            "fieldname": "service_type",
+            "fieldtype": "Select",
+            "label": "Service Type",
+            "depends_on": "logistics_partner"
+        },
+        {
+            "fieldname": "tracking_number",
+            "fieldtype": "Data",
+            "label": "Tracking Number",
+            "read_only": 1
+        },
+        {
+            "fieldname": "logistics_tracking_number",
+            "fieldtype": "Data",
+            "label": "Logistics Tracking Number",
+            "read_only": 1
+        },
+        {
+            "fieldname": "carrier_name",
+            "fieldtype": "Data",
+            "label": "Carrier Name",
+            "read_only": 1
+        },
+        {
+            "fieldname": "carrier_status",
+            "fieldtype": "Select",
+            "label": "Carrier Status",
+            "options": "\nPending\nCreated\nPicked Up\nIn Transit\nOut for Delivery\nDelivered\nRTO\nException\nCancelled",
+            "read_only": 1
+        },
+        {
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "label": "Status",
+            "options": "Draft\nPending\nHanded Over\nIn Transit\nDelivered\nReturned",
+            "default": "Draft"
+        },
+        {
+            "fieldname": "section_break_ekart",
+            "fieldtype": "Section Break",
+            "label": "Ekart Logistics",
+            "collapsible": 1
+        },
+        {
+            "fieldname": "ekart_tracking_number",
+            "fieldtype": "Data",
+            "label": "Ekart Tracking Number",
+            "read_only": 1,
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "ekart_awb_number",
+            "fieldtype": "Data",
+            "label": "AWB Number",
+            "read_only": 1
+        },
+        {
+            "fieldname": "ekart_shipment_status",
+            "fieldtype": "Select",
+            "label": "Shipment Status",
+            "options": "\nPending\nCreated\nPicked Up\nIn Transit\nOut for Delivery\nDelivered\nRTO\nException\nCancelled",
+            "default": "Pending",
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "column_break_ekart",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "ekart_label",
+            "fieldtype": "Attach",
+            "label": "Shipping Label",
+            "read_only": 1
+        },
+        {
+            "fieldname": "ekart_manifest_id",
+            "fieldtype": "Data",
+            "label": "Manifest ID",
+            "read_only": 1
+        },
+        {
+            "fieldname": "ekart_pickup_date",
+            "fieldtype": "Datetime",
+            "label": "Pickup Date",
+            "read_only": 1
+        },
+        {
+            "fieldname": "ekart_delivery_date",
+            "fieldtype": "Datetime",
+            "label": "Delivery Date",
+            "read_only": 1
+        },
+        {
+            "fieldname": "section_break_tracking",
+            "fieldtype": "Section Break",
+            "label": "Tracking History",
+            "collapsible": 1,
+            "collapsible_depends_on": "logistics_tracking_number"
+        },
+        {
+            "fieldname": "tracking_history",
+            "fieldtype": "Table",
+            "label": "Tracking Events",
+            "options": "Shipment Tracking History",
+            "read_only": 1
+        },
+        {
+  "fieldname": "delivery_note",
+  "fieldtype": "Link",
+  "label": "Delivery Note",
+  "options": "Delivery Note",
+  "in_list_view": 0,
+  "in_standard_filter": 1,
+  "search_index": 1,
+  "unique": 1,
+  "read_only": 0,
+  "reqd": 0,
+  "hidden": 0
+},
+        {
+            "fieldname": "section_break_scanning",
+            "fieldtype": "Section Break",
+            "label": "QR Code Scanning"
+        },
+        {
+            "fieldname": "scan_input",
+            "fieldtype": "Data",
+            "label": "Scan QR Code / Barcode",
+            "description": "Scan or enter barcode/QR code to map box to IAWB"
+        },
+        {
+            "fieldname": "scan_button_html",
+            "fieldtype": "HTML",
+            "label": "Scan Button",
+            "options": "<button class=\"btn btn-primary btn-sm\" onclick=\"cur_frm.events.trigger_camera_scan(cur_frm)\"><i class=\"fa fa-camera\"></i> Open Camera</button>"
+        },
+        {
+            "fieldname": "section_break_packing_materials",
+            "fieldtype": "Section Break",
+            "label": "Packing Materials",
+            "collapsible": 1
+        },
+        {
+            "fieldname": "packing_materials",
+            "fieldtype": "Table",
+            "label": "Packing Materials",
+            "options": "Packing Material Item"
+        },
+        {
+            "fieldname": "section_break_dimensions",
+            "fieldtype": "Section Break",
+            "label": "Package Dimensions & Category"
+        },
+        {
+            "fieldname": "weight",
+            "fieldtype": "Float",
+            "label": "Weight (kg)",
+            "default": 1
+        },
+        {
+            "fieldname": "length",
+            "fieldtype": "Float",
+            "label": "Length (cm)"
+        },
+        {
+            "fieldname": "width",
+            "fieldtype": "Float",
+            "label": "Width (cm)"
+        },
+        {
+            "fieldname": "height",
+            "fieldtype": "Float",
+            "label": "Height (cm)"
+        },
+        {
+            "fieldname": "column_break_cbm",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "total_cbm",
+            "fieldtype": "Float",
+            "label": "Total CBM (m³)",
+            "read_only": 1,
+            "precision": 6,
+            "description": "Auto-calculated from packing materials"
+        },
+        {
+            "fieldname": "shipment_category",
+            "fieldtype": "Select",
+            "label": "Shipment Category",
+            "options": "\nLarge\nNon-Large",
+            "read_only": 1,
+            "in_list_view": 1,
+            "bold": 1,
+            "description": "Large if any dimension > 120cm OR total CBM > 0.5 m³"
+        },
+        {
+            "fieldname": "max_dimension",
+            "fieldtype": "Float",
+            "label": "Max Dimension (cm)",
+            "read_only": 1,
+            "description": "Largest single dimension from packing materials"
+        },
+        {
+            "fieldname": "section_break_payment",
+            "fieldtype": "Section Break",
+            "label": "Payment & Values"
+        },
+        {
+            "fieldname": "declared_value",
+            "fieldtype": "Currency",
+            "label": "Declared Value"
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Text",
+            "label": "Package Description"
+        },
+        {
+            "fieldname": "column_break_payment",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "payment_type",
+            "fieldtype": "Select",
+            "label": "Payment Type",
+            "options": "Prepaid\nCOD",
+            "default": "Prepaid"
+        },
+        {
+            "fieldname": "cod_amount",
+            "fieldtype": "Currency",
+            "label": "COD Amount",
+            "depends_on": "eval:doc.payment_type === 'COD'"
+        },
+        {
+            "fieldname": "section_break_additional",
+            "fieldtype": "Section Break",
+            "label": "Additional Details",
+            "collapsible": 1
+        },
+        {
+            "fieldname": "invoice_number",
+            "fieldtype": "Data",
+            "label": "Invoice Number"
+        },
+        {
+            "fieldname": "invoice_value",
+            "fieldtype": "Currency",
+            "label": "Invoice Value"
+        },
+        {
+            "fieldname": "column_break_additional",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "city",
+            "fieldtype": "Data",
+            "label": "City"
+        },
+        {
+            "fieldname": "delivery_instructions",
+            "fieldtype": "Text",
+            "label": "Delivery Instructions"
+        },
+        {
+            "fieldname": "section_break_carrier_response",
+            "fieldtype": "Section Break",
+            "label": "Carrier Response",
+            "collapsible": 1,
+            "collapsible_depends_on": "carrier_response"
+        },
+        {
+            "fieldname": "carrier_response",
+            "fieldtype": "Code",
+            "label": "Carrier Response",
+            "read_only": 1,
+            "options": "JSON"
+        },
+        {
+            "fieldname": "shipping_label",
+            "fieldtype": "Attach",
+            "label": "Shipping Label",
+            "read_only": 1
+        }
+    ],
+    "permissions": [
+        {
+            "role": "System Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1,
+            "delete": 1,
+            "submit": 1,
+            "cancel": 1,
+            "amend": 1
+        },
+        {
+            "role": "Warehouse Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1,
+            "delete": 0,
+            "submit": 1,
+            "cancel": 0,
+            "amend": 0
+        }
+    ]
+}

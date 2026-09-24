@@ -1,0 +1,164 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{gateway_provider}-{environment}",
+ "creation": "2026-01-24 15:30:09.690094",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "is_active",
+  "gateway_provider",
+  "client_id",
+  "client_secret",
+  "base_url",
+  "payment_url",
+  "return_url",
+  "webhook_url",
+  "cancel_url",
+  "status_checking_url",
+  "column_break_xldp",
+  "environment",
+  "merchant_id",
+  "working_key",
+  "access_code",
+  "extra_config"
+ ],
+ "fields": [
+  {
+   "fieldname": "gateway_provider",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Gateway Provider",
+   "options": "Payment Provider",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "is Active"
+  },
+  {
+   "fieldname": "merchant_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Merchant ID",
+   "reqd": 1
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Data",
+   "label": "Client ID"
+  },
+  {
+   "fieldname": "client_secret",
+   "fieldtype": "Data",
+   "label": "Client Secret"
+  },
+  {
+   "fieldname": "return_url",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "label": "Return URL",
+   "reqd": 1
+  },
+  {
+   "fieldname": "webhook_url",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "label": "Webhook URL"
+  },
+  {
+   "fieldname": "extra_config",
+   "fieldtype": "Code",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "label": "Extra Config"
+  },
+  {
+   "default": "DEVELOPMENT",
+   "fieldname": "environment",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Environment",
+   "options": "DEVELOPMENT\nUAT\nPRODUCTION\nSERVER_DEVELOPMENT\nSERVER_UAT\nSERVER_PRODUCTION",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_xldp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "working_key",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Working Key"
+  },
+  {
+   "fieldname": "access_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Access Code"
+  },
+  {
+   "fieldname": "payment_url",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "label": "Payment URL",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cancel_url",
+   "fieldtype": "Data",
+   "label": "Cancel URL"
+  },
+  {
+   "fieldname": "status_checking_url",
+   "fieldtype": "Data",
+   "label": "Status Checking URL"
+  },
+  {
+   "fieldname": "base_url",
+   "fieldtype": "Data",
+   "label": "Base URL",
+   "reqd": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-02-26 19:29:48.815109",
+ "modified_by": "Administrator",
+ "module": "Impressio",
+ "name": "Payment Gateway Configuration",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

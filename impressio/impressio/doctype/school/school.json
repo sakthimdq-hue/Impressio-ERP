@@ -1,0 +1,284 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{school_code}-{school_name}",
+ "creation": "2025-10-07 15:04:03.476173",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "details_tab",
+  "school_code",
+  "school_name",
+  "branch_name",
+  "website_url",
+  "status",
+  "column_break_iiyr",
+  "school_logo",
+  "school_logo_view",
+  "address_details_section",
+  "street",
+  "country",
+  "column_break_mrtk",
+  "city",
+  "pincode",
+  "column_break_tpmr",
+  "state",
+  "school_coordinator_section",
+  "school_coordinator",
+  "dashboard_tab",
+  "school_dashboard_html",
+  "grades_tab",
+  "grades_details_section",
+  "grades_details",
+  "sku_mapping_tab",
+  "uniform_details_section",
+  "uniform_details_checkbox",
+  "uniform_details",
+  "uniform_detail_costing",
+  "books_details_section",
+  "books_details_checkbox",
+  "books_details",
+  "books_details_costing",
+  "students_tab",
+  "empty_field"
+ ],
+ "fields": [
+  {
+   "fieldname": "school_code",
+   "fieldtype": "Data",
+   "label": "School Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "school_name",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "School Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "website_url",
+   "fieldtype": "Data",
+   "label": "Website URL"
+  },
+  {
+   "default": "Active",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Active\nInactive"
+  },
+  {
+   "fieldname": "column_break_iiyr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "school_logo",
+   "fieldtype": "Attach",
+   "label": "School Logo"
+  },
+  {
+   "fieldname": "school_logo_view",
+   "fieldtype": "Image",
+   "label": "School Logo View",
+   "options": "school_logo"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "address_details_section",
+   "fieldtype": "Section Break",
+   "label": "Address & Contacts"
+  },
+  {
+   "fieldname": "street",
+   "fieldtype": "Data",
+   "label": "Street"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "column_break_mrtk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Link",
+   "label": "City",
+   "options": "Lead City"
+  },
+  {
+   "fieldname": "pincode",
+   "fieldtype": "Int",
+   "label": "Pincode",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "column_break_tpmr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Link",
+   "label": "State",
+   "options": "Lead State"
+  },
+  {
+   "fieldname": "grades_tab",
+   "fieldtype": "Tab Break",
+   "label": "Grades"
+  },
+  {
+   "fieldname": "grades_details_section",
+   "fieldtype": "Section Break",
+   "label": "Grades Details"
+  },
+  {
+   "fieldname": "grades_details",
+   "fieldtype": "Table",
+   "label": "Grades Details",
+   "options": "School Grade Details Child Table"
+  },
+  {
+   "fieldname": "sku_mapping_tab",
+   "fieldtype": "Tab Break",
+   "label": "SKU Mapping"
+  },
+  {
+   "fieldname": "uniform_details_section",
+   "fieldtype": "Section Break",
+   "label": "Uniform Details"
+  },
+  {
+   "fieldname": "uniform_details",
+   "fieldtype": "Table",
+   "label": " ",
+   "options": "School Uniform Details"
+  },
+  {
+   "fieldname": "books_details_section",
+   "fieldtype": "Section Break",
+   "label": "Books Details"
+  },
+  {
+   "fieldname": "books_details",
+   "fieldtype": "Table",
+   "label": " ",
+   "options": "School Books Details"
+  },
+  {
+   "fieldname": "uniform_detail_costing",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "options": "School Uniform Costing Details"
+  },
+  {
+   "fieldname": "books_details_costing",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Books Details Costing",
+   "options": "School Books Costing Details"
+  },
+  {
+   "fieldname": "students_tab",
+   "fieldtype": "Tab Break",
+   "label": "Students"
+  },
+  {
+   "fieldname": "empty_field",
+   "fieldtype": "Data",
+   "label": "students_tab"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "school_coordinator_section",
+   "fieldtype": "Section Break",
+   "label": "School Coordinator"
+  },
+  {
+   "fieldname": "school_coordinator",
+   "fieldtype": "Table",
+   "label": "School Coordinator",
+   "options": "School Coordinator Details"
+  },
+  {
+   "default": "0",
+   "fieldname": "uniform_details_checkbox",
+   "fieldtype": "Check",
+   "in_preview": 1,
+   "label": "Select Uniform Details",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "books_details_checkbox",
+   "fieldtype": "Check",
+   "label": "Select Books Details",
+   "read_only": 1
+  },
+  {
+   "fieldname": "branch_name",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Branch Name"
+  },
+  {
+   "fieldname": "dashboard_tab",
+   "fieldtype": "Tab Break",
+   "label": "Dashboard"
+  },
+  {
+   "fieldname": "school_dashboard_html",
+   "fieldtype": "HTML",
+   "label": "school_dashboard_html"
+  },
+  {
+   "fieldname": "details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Details"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-03-14 13:46:48.188887",
+ "modified_by": "Administrator",
+ "module": "Impressio",
+ "name": "School",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

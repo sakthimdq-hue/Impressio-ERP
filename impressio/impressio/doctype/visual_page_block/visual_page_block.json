@@ -1,0 +1,144 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-01-20 12:50:11.746633",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_tkbi",
+  "page_meta",
+  "page_no",
+  "page_title",
+  "left_section",
+  "left_content",
+  "left_width",
+  "center_section",
+  "center_image",
+  "center_width",
+  "center_height",
+  "right_section",
+  "right_image",
+  "right_width",
+  "right_height",
+  "right_caption",
+  "page_controls",
+  "page_break"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_tkbi",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "page_meta",
+   "fieldtype": "Section Break",
+   "label": "Page Meta"
+  },
+  {
+   "fieldname": "page_no",
+   "fieldtype": "Int",
+   "label": "Page No"
+  },
+  {
+   "fieldname": "page_title",
+   "fieldtype": "Data",
+   "label": "Page Title"
+  },
+  {
+   "fieldname": "left_section",
+   "fieldtype": "Section Break",
+   "label": "Left Column (Text)"
+  },
+  {
+   "fieldname": "left_content",
+   "fieldtype": "Text Editor",
+   "label": "Left Content"
+  },
+  {
+   "default": "350",
+   "fieldname": "left_width",
+   "fieldtype": "Int",
+   "label": "Text Width (px)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "center_section",
+   "fieldtype": "Section Break",
+   "label": "Center Column (Image)"
+  },
+  {
+   "fieldname": "center_image",
+   "fieldtype": "Attach Image",
+   "label": "Center Image"
+  },
+  {
+   "default": "400",
+   "fieldname": "center_width",
+   "fieldtype": "Int",
+   "label": "Image Width (px)",
+   "read_only": 1
+  },
+  {
+   "default": "500",
+   "fieldname": "center_height",
+   "fieldtype": "Int",
+   "label": "Image Height (px)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "right_section",
+   "fieldtype": "Section Break",
+   "label": "Right Column (Illustration)"
+  },
+  {
+   "fieldname": "right_image",
+   "fieldtype": "Attach Image",
+   "label": "Illustration Image"
+  },
+  {
+   "default": "300",
+   "fieldname": "right_width",
+   "fieldtype": "Int",
+   "label": "Illustration Width (px)",
+   "read_only": 1
+  },
+  {
+   "default": "500",
+   "fieldname": "right_height",
+   "fieldtype": "Int",
+   "label": "Illustration Height (px)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "right_caption",
+   "fieldtype": "Small Text",
+   "label": "Illustration Caption"
+  },
+  {
+   "fieldname": "page_controls",
+   "fieldtype": "Section Break",
+   "label": "Page Controls"
+  },
+  {
+   "default": "1",
+   "fieldname": "page_break",
+   "fieldtype": "Check",
+   "label": "New Page After"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-01-20 13:06:39.118358",
+ "modified_by": "Administrator",
+ "module": "Impressio",
+ "name": "Visual Page Block",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

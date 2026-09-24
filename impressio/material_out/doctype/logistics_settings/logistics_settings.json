@@ -1,0 +1,481 @@
+{
+    "doctype": "DocType",
+    "name": "Logistics Settings",
+    "module": "Material Out",
+    "issingle": 1,
+    "custom": 0,
+    "autoname": "Logistics Settings",
+    "fields": [
+        {
+            "fieldname": "section_break_general",
+            "fieldtype": "Section Break",
+            "label": "General Settings"
+        },
+        {
+            "fieldname": "warehouse_pincode",
+            "fieldtype": "Data",
+            "label": "Warehouse Pincode",
+            "reqd": 1,
+            "default": "560001"
+        },
+        {
+            "fieldname": "warehouse_address",
+            "fieldtype": "Text",
+            "label": "Warehouse Address"
+        },
+        {
+            "fieldname": "default_carrier",
+            "fieldtype": "Select",
+            "label": "Default Carrier",
+            "options": "\nEkart\nAmazon Shipping\nShiprocket",
+            "default": "Ekart"
+        },
+        {
+            "fieldname": "use_mock_api",
+            "fieldtype": "Check",
+            "label": "Use Mock API (Testing)",
+            "default": 1
+        },
+        {
+            "fieldname": "column_break_general",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "auto_create_shipment",
+            "fieldtype": "Check",
+            "label": "Auto Create Shipment on Submit"
+        },
+        {
+            "fieldname": "auto_track_shipment",
+            "fieldtype": "Check",
+            "label": "Auto Track Shipments"
+        },
+        {
+            "fieldname": "tracking_interval",
+            "fieldtype": "Select",
+            "label": "Tracking Interval",
+            "options": "\n30 minutes\n1 hour\n2 hours\n6 hours\n12 hours\n24 hours",
+            "default": "6 hours",
+            "depends_on": "auto_track_shipment"
+        },
+        {
+            "fieldname": "section_break_ekart",
+            "fieldtype": "Section Break",
+            "label": "Ekart Settings",
+            "collapsible": 1
+        },
+        {
+            "fieldname": "enable_ekart",
+            "fieldtype": "Check",
+            "label": "Enable Ekart",
+            "default": 1
+        },
+        {
+            "fieldname": "ekart_environment",
+            "fieldtype": "Select",
+            "label": "Environment",
+            "options": "Sandbox\nProduction",
+            "default": "Sandbox",
+            "depends_on": "enable_ekart"
+        },
+        {
+            "fieldname": "ekart_client_id",
+            "fieldtype": "Data",
+            "label": "Client ID",
+            "depends_on": "enable_ekart"
+        },
+        {
+            "fieldname": "ekart_client_secret",
+            "fieldtype": "Password",
+            "label": "Client Secret",
+            "depends_on": "enable_ekart"
+        },
+        {
+            "fieldname": "ekart_username",
+            "fieldtype": "Data",
+            "label": "Username (Optional)",
+            "depends_on": "enable_ekart"
+        },
+        {
+            "fieldname": "ekart_password",
+            "fieldtype": "Password",
+            "label": "Password (Optional)",
+            "depends_on": "enable_ekart"
+        },
+        {
+            "fieldname": "ekart_sender_name",
+            "fieldtype": "Data",
+            "label": "Sender Name",
+            "depends_on": "enable_ekart",
+            "reqd": 1
+        },
+        {
+            "fieldname": "ekart_sender_phone",
+            "fieldtype": "Data",
+            "label": "Sender Phone",
+            "depends_on": "enable_ekart",
+            "reqd": 1
+        },
+        {
+            "fieldname": "ekart_sender_email",
+            "fieldtype": "Data",
+            "label": "Sender Email",
+            "depends_on": "enable_ekart"
+        },
+        {
+            "fieldname": "ekart_sender_address",
+            "fieldtype": "Text",
+            "label": "Sender Address Line 1",
+            "depends_on": "enable_ekart",
+            "reqd": 1
+        },
+        {
+            "fieldname": "ekart_sender_address2",
+            "fieldtype": "Text",
+            "label": "Sender Address Line 2 (Optional)",
+            "depends_on": "enable_ekart"
+        },
+        {
+            "fieldname": "ekart_sender_landmark",
+            "fieldtype": "Data",
+            "label": "Sender Landmark (Optional)",
+            "depends_on": "enable_ekart"
+        },
+        {
+            "fieldname": "ekart_sender_city",
+            "fieldtype": "Data",
+            "label": "Sender City",
+            "depends_on": "enable_ekart",
+            "reqd": 1
+        },
+        {
+            "fieldname": "ekart_sender_state",
+            "fieldtype": "Data",
+            "label": "Sender State",
+            "depends_on": "enable_ekart",
+            "reqd": 1
+        },
+        {
+            "fieldname": "ekart_sender_pincode",
+            "fieldtype": "Data",
+            "label": "Sender Pincode",
+            "depends_on": "enable_ekart",
+            "reqd": 1
+        },
+        {
+            "fieldname": "ekart_seller_name",
+            "fieldtype": "Data",
+            "label": "Seller Registered Name",
+            "depends_on": "enable_ekart",
+            "description": "Legal name of the seller (for GST purposes)"
+        },
+        {
+            "fieldname": "ekart_gstin",
+            "fieldtype": "Data",
+            "label": "Seller GSTIN",
+            "depends_on": "enable_ekart",
+            "description": "15-digit GST Identification Number"
+        },
+        {
+            "fieldname": "ekart_brand_name",
+            "fieldtype": "Data",
+            "label": "Brand/Communication Name",
+            "depends_on": "enable_ekart",
+            "description": "Brand name to display on labels"
+        },
+        {
+            "fieldname": "ekart_hsn",
+            "fieldtype": "Data",
+            "label": "Default HSN Code",
+            "depends_on": "enable_ekart"
+        },
+        {
+            "fieldname": "column_break_ekart_auth",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "ekart_auth_large_staging",
+            "fieldtype": "Password",
+            "label": "Large Auth Code (Staging)",
+            "depends_on": "enable_ekart",
+            "default": "aW52ZW50cmVpZWw6ejVkaXRGRE5TTndaeXNTTg==",
+            "description": "Basic auth for Large shipments (IEL) - without 'Basic ' prefix"
+        },
+        {
+            "fieldname": "ekart_auth_non_large_staging",
+            "fieldtype": "Password",
+            "label": "Non-Large Auth Code (Staging)",
+            "depends_on": "enable_ekart",
+            "default": "aW52ZW50cmVpZXM6b3pKV0xyeE9Kbjl1ZlJvYg==",
+            "description": "Basic auth for Non-Large shipments (IES) - without 'Basic ' prefix"
+        },
+        {
+            "fieldname": "ekart_auth_large_production",
+            "fieldtype": "Password",
+            "label": "Large Auth Code (Production)",
+            "depends_on": "enable_ekart",
+            "default": "aW52ZW50cmVpZWw6VG81bVFwQ3R5eUl1dkhINA==",
+            "description": "Basic auth for Large shipments (IEL) - without 'Basic ' prefix"
+        },
+        {
+            "fieldname": "ekart_auth_non_large_production",
+            "fieldtype": "Password",
+            "label": "Non-Large Auth Code (Production)",
+            "depends_on": "enable_ekart",
+            "default": "aW52ZW50cmVpZXM6enhKRjJaVHhNU1phSmI2aQ==",
+            "description": "Basic auth for Non-Large shipments (IES) - without 'Basic ' prefix"
+        },
+        {
+            "fieldname": "ekart_large_weight_threshold",
+            "fieldtype": "Float",
+            "label": "Large Shipment Weight Threshold (kg)",
+            "depends_on": "enable_ekart",
+            "default": 10,
+            "description": "Shipments above this weight are considered Large"
+        },
+        {
+            "fieldname": "ekart_debug_mode",
+            "fieldtype": "Check",
+            "label": "Debug Mode (Log all API calls)",
+            "depends_on": "enable_ekart",
+            "default": 1
+        },
+        {
+            "fieldname": "ekart_timeout",
+            "fieldtype": "Int",
+            "label": "API Timeout (seconds)",
+            "depends_on": "enable_ekart",
+            "default": 30
+        },
+        {
+            "fieldname": "section_break_ekart_advanced",
+            "fieldtype": "Section Break",
+            "label": "Ekart Advanced Settings",
+            "collapsible": 1,
+            "collapsible_depends_on": "enable_ekart"
+        },
+        {
+            "fieldname": "ekart_default_service",
+            "fieldtype": "Select",
+            "label": "Default Service Code",
+            "options": "\nREGULAR\nECONOMY\nNDD",
+            "default": "REGULAR",
+            "depends_on": "enable_ekart",
+            "description": "REGULAR: Standard, ECONOMY: Budget, NDD: Next Day Delivery"
+        },
+        {
+            "fieldname": "ekart_goods_category",
+            "fieldtype": "Select",
+            "label": "Default Goods Category",
+            "options": "\nESSENTIAL\nNON_ESSENTIAL",
+            "default": "ESSENTIAL",
+            "depends_on": "enable_ekart"
+        },
+        {
+            "fieldname": "ekart_offering_tier_large",
+            "fieldtype": "Select",
+            "label": "Large Shipment Offering Tier",
+            "options": "\nP4\nP3\nP2\nP1",
+            "default": "P4",
+            "depends_on": "enable_ekart",
+            "description": "P4: Standard, P3: Priority, etc."
+        },
+        {
+            "fieldname": "ekart_return_location_name",
+            "fieldtype": "Data",
+            "label": "Return Location Contact Name",
+            "depends_on": "enable_ekart",
+            "default": "RTO Center"
+        },
+        {
+            "fieldname": "column_break_ekart_advanced",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "ekart_auto_generate_tracking",
+            "fieldtype": "Check",
+            "label": "Auto-generate Tracking IDs",
+            "depends_on": "enable_ekart",
+            "default": 1
+        },
+        {
+            "fieldname": "ekart_tracking_id_prefix",
+            "fieldtype": "Data",
+            "label": "Custom Tracking ID Prefix",
+            "depends_on": "enable_ekart",
+            "description": "Override default merchant code (IES/IEL) - use with caution"
+        },
+        {
+            "fieldname": "section_break_amazon",
+            "fieldtype": "Section Break",
+            "label": "Amazon Shipping",
+            "collapsible": 1
+        },
+        {
+            "fieldname": "enable_amazon",
+            "fieldtype": "Check",
+            "label": "Enable Amazon Shipping"
+        },
+        {
+            "fieldname": "amazon_seller_id",
+            "fieldtype": "Data",
+            "label": "Seller ID",
+            "depends_on": "enable_amazon"
+        },
+        {
+            "fieldname": "amazon_client_id",
+            "fieldtype": "Data",
+            "label": "Client ID",
+            "depends_on": "enable_amazon"
+        },
+        {
+            "fieldname": "amazon_client_secret",
+            "fieldtype": "Password",
+            "label": "Client Secret",
+            "depends_on": "enable_amazon"
+        },
+        {
+            "fieldname": "amazon_sender_name",
+            "fieldtype": "Data",
+            "label": "Sender Name",
+            "depends_on": "enable_amazon",
+            "reqd": 1
+        },
+        {
+            "fieldname": "amazon_sender_phone",
+            "fieldtype": "Data",
+            "label": "Sender Phone",
+            "depends_on": "enable_amazon",
+            "reqd": 1
+        },
+        {
+            "fieldname": "amazon_sender_city",
+            "fieldtype": "Data",
+            "label": "Sender City",
+            "depends_on": "enable_amazon",
+            "reqd": 1
+        },
+        {
+            "fieldname": "amazon_sender_state",
+            "fieldtype": "Data",
+            "label": "Sender State",
+            "depends_on": "enable_amazon",
+            "reqd": 1
+        },
+        {
+            "fieldname": "amazon_gst_number",
+            "fieldtype": "Data",
+            "label": "Seller GST Number",
+            "depends_on": "enable_amazon"
+        },
+        {
+            "fieldname": "amazon_refresh_token",
+            "fieldtype": "Password",
+            "label": "Refresh Token",
+            "depends_on": "enable_amazon"
+        },
+        {
+            "fieldname": "amazon_sandbox",
+            "fieldtype": "Check",
+            "label": "Use Sandbox",
+            "default": 1,
+            "depends_on": "enable_amazon"
+        },
+        {
+            "fieldname": "column_break_amazon",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "amazon_default_service",
+            "fieldtype": "Select",
+            "label": "Default Service",
+            "options": "\nStandard\nExpedited\nPriority\nScheduled",
+            "default": "Standard",
+            "depends_on": "enable_amazon"
+        },
+        {
+            "fieldname": "section_break_shiprocket",
+            "fieldtype": "Section Break",
+            "label": "Shiprocket",
+            "collapsible": 1
+        },
+        {
+            "fieldname": "enable_shiprocket",
+            "fieldtype": "Check",
+            "label": "Enable Shiprocket"
+        },
+        {
+            "fieldname": "shiprocket_email",
+            "fieldtype": "Data",
+            "label": "Email",
+            "depends_on": "enable_shiprocket"
+        },
+        {
+            "fieldname": "shiprocket_password",
+            "fieldtype": "Password",
+            "label": "Password",
+            "depends_on": "enable_shiprocket"
+        },
+        {
+            "fieldname": "shiprocket_token",
+            "fieldtype": "Data",
+            "label": "API Token",
+            "depends_on": "enable_shiprocket"
+        },
+        {
+            "fieldname": "shiprocket_sandbox",
+            "fieldtype": "Check",
+            "label": "Use Sandbox",
+            "default": 1,
+            "depends_on": "enable_shiprocket"
+        },
+        {
+            "fieldname": "column_break_shiprocket",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "shiprocket_default_courier",
+            "fieldtype": "Select",
+            "label": "Default Courier",
+            "options": "\nShiprocket Surface\nShiprocket Air\nDelhivery Surface\nDelhivery Air\nBlueDart\nDTDC\nXpressBees",
+            "default": "Shiprocket Surface",
+            "depends_on": "enable_shiprocket"
+        },
+        {
+            "fieldname": "shiprocket_channel_id",
+            "fieldtype": "Data",
+            "label": "Channel ID",
+            "depends_on": "enable_shiprocket"
+        },
+        {
+            "fieldname": "section_break_webhook",
+            "fieldtype": "Section Break",
+            "label": "Webhook Settings",
+            "collapsible": 1
+        },
+        {
+            "fieldname": "webhook_secret",
+            "fieldtype": "Password",
+            "label": "Webhook Secret"
+        },
+        {
+            "fieldname": "webhook_url",
+            "fieldtype": "Data",
+            "label": "Webhook URL",
+            "read_only": 1,
+            "default": "/api/method/material_out.api.webhooks.handle_ekart_webhook"
+        }
+    ],
+    "permissions": [
+        {
+            "role": "System Manager",
+            "read": 1,
+            "write": 1
+        },
+        {
+            "role": "Warehouse Manager",
+            "read": 1,
+            "write": 0
+        }
+    ]
+}
