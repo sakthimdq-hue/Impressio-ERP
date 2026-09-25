@@ -147,13 +147,13 @@ get_indicator(doc) {
 			listview.page.add_inner_button(__("Dashboard"), () => open_sales_dashboard());
 			listview.page.add_inner_button(__("Analytics"), () => open_sales_analytics());
 
-			listview.page.add_inner_button(__("Import Orders from API"), function () {
+			listview.page.add_inner_button(__("Import Orders from API's"), function () {
 				impressio_sync_orders(listview);
 			}, __("Orders"));
 
-			if (listview.page.inner_toolbar && !listview.page.inner_toolbar.find(`button[data-label="${encodeURIComponent("Import Orders from API")}"]`).length) {
+			if (listview.page.inner_toolbar && !listview.page.inner_toolbar.find(`button[data-label="${encodeURIComponent("Import Orders from API's")}"]`).length) {
 				listview.page.add_inner_button(
-					__("Import Orders from API"),
+					__("Import Orders from API's"),
 					function () {
 						impressio_sync_orders(listview);
 					}

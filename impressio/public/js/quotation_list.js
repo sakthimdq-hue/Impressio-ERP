@@ -24,9 +24,9 @@ frappe.listview_settings["Quotation"] = frappe.listview_settings["Quotation"] ||
 		if (!listview || !listview.page) return;
 
 		// 1. Direct button in inner toolbar
-		if (listview.page.inner_toolbar && !listview.page.inner_toolbar.find(`button[data-label="${encodeURIComponent("Import Quotations from API")}"]`).length) {
+		if (listview.page.inner_toolbar && !listview.page.inner_toolbar.find(`button[data-label="${encodeURIComponent("Import Quotations from API's")}"]`).length) {
 			listview.page.add_inner_button(
-				__("Import Quotations from API"),
+				__("Import Quotations from API's"),
 				function () {
 					impressio_sync_quotations(listview);
 				}
@@ -35,7 +35,7 @@ frappe.listview_settings["Quotation"] = frappe.listview_settings["Quotation"] ||
 
 		// 3. In Actions menu dropdown
 		listview.page.add_inner_button(
-			__("Import Quotations from API"),
+			__("Import Quotations from API's"),
 			function () {
 				impressio_sync_quotations(listview);
 			},
