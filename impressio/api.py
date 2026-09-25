@@ -2330,6 +2330,20 @@ def create_or_update_erpnext_sales_order(order_data, company=None):
 
 	so.customer = customer_name
 	so.company = company
+
+	# Set Company Address & GSTIN for India Compliance
+	company_addr = get_or_create_company_address(company)
+	if company_addr:
+		so.company_address = company_addr
+		comp_gstin = frappe.db.get_value("Address", company_addr, "gstin")
+		if comp_gstin:
+			so.company_gstin = comp_gstin
+
+	# Set Customer Address
+	customer_addr = get_or_create_customer_address(customer_name)
+	if customer_addr:
+		so.customer_address = customer_addr
+
 	created_at = order_data.get("createdAt")
 	so.transaction_date = str(created_at)[:10] if created_at else frappe.utils.today()
 	# transaction_date + 7 use pannuvom — data accurate-ah irukum
@@ -2414,6 +2428,9 @@ def create_or_update_erpnext_sales_order(order_data, company=None):
 			so.custom_student_school = school_link
 			so.custom_student_grade = ensure_grade(st_info.get("grade"))
 
+	# Extract order items
+	raw_items = order_data.get("items", [])
+
 	# Fallback school & grade from order items if not set from student
 	if not so.get("custom_student_school") and raw_items:
 		for rit in raw_items:
@@ -2432,7 +2449,6 @@ def create_or_update_erpnext_sales_order(order_data, company=None):
 				break
 
 	# Items and Sub-items
-	raw_items = order_data.get("items", [])
 	so.items = []
 	if hasattr(so, "custom_sub_items"):
 		so.custom_sub_items = []
