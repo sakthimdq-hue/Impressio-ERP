@@ -1557,49 +1557,95 @@ def get_or_create_student_guardian(guardian_name, mobile, email=None, relation=N
 
 
 @frappe.whitelist()
-def fetch_students_from_api(api_url=None, page=1, limit=50):
+def fetch_students_from_api(api_url=None, page=1, limit=50, fetch_all=True):
 	"""
 	Fetches students list from external Students API endpoint.
+	If fetch_all is True (or 1 / 'true'), it automatically paginates through
+	all pages (page 1 to total_pages) to retrieve the complete list (e.g. 1338 students).
 	"""
 	if not api_url:
 		api_url = DEFAULT_STUDENTS_API_URL
 
 	api_url = str(api_url).strip()
-	params = {}
-	if page:
-		params["page"] = int(page)
-	if limit:
-		params["limit"] = int(limit)
 
-	headers = {
+	should_fetch_all = True
+	if fetch_all is not None:
+		if isinstance(fetch_all, bool):
+			should_fetch_all = fetch_all
+		elif str(fetch_all).strip().lower() in ["0", "false", "no"]:
+			should_fetch_all = False
+
+	session = requests.Session()
+	session.headers.update({
 		"User-Agent": "ERPNext-Impressio/1.0",
 		"Accept": "application/json",
+	})
+
+	initial_page = int(page) if page else 1
+	per_page_limit = int(limit) if limit else 50
+
+	params = {
+		"page": initial_page,
+		"limit": per_page_limit,
 	}
 
-	response = requests.get(api_url, params=params, timeout=25, headers=headers)
+	response = session.get(api_url, params=params, timeout=30)
 	response.raise_for_status()
 	data = response.json()
 
-	students = []
-	pagination = {}
-	if isinstance(data, dict):
-		res_data = data.get("data", {})
-		if isinstance(res_data, dict):
-			students = res_data.get("students", [])
-			pagination = res_data.get("pagination", {})
-		elif isinstance(res_data, list):
-			students = res_data
-		elif "students" in data:
-			students = data.get("students", [])
+	def extract_page_data(d):
+		page_students = []
+		page_pagination = {}
+		if isinstance(d, dict):
+			res_data = d.get("data", {})
+			if isinstance(res_data, dict):
+				page_students = res_data.get("students", [])
+				page_pagination = res_data.get("pagination", {})
+			elif isinstance(res_data, list):
+				page_students = res_data
+			elif "students" in d:
+				page_students = d.get("students", [])
+
+			if not page_pagination and "pagination" in d and isinstance(d.get("pagination"), dict):
+				page_pagination = d.get("pagination", {})
+		return page_students, page_pagination
+
+	students, pagination = extract_page_data(data)
+
+	total_count = pagination.get("total", len(students))
+	total_pages = pagination.get("total_pages", 1)
+
+	if should_fetch_all and total_pages > initial_page:
+		for current_p in range(initial_page + 1, total_pages + 1):
+			try:
+				p_params = {
+					"page": current_p,
+					"limit": per_page_limit,
+				}
+				p_resp = session.get(api_url, params=p_params, timeout=30)
+				if p_resp.status_code == 200:
+					p_data = p_resp.json()
+					p_students, _ = extract_page_data(p_data)
+					if p_students:
+						students.extend(p_students)
+					else:
+						break
+				else:
+					frappe.log_error(title="Students API Fetch Error", message=f"Page {current_p} returned {p_resp.status_code}")
+					break
+			except Exception as err:
+				frappe.log_error(title="Students API Fetch Page Exception", message=f"Failed fetching page {current_p}: {str(err)}")
+				break
 
 	return {
 		"success": True,
 		"students": students,
 		"pagination": pagination,
-		"total": pagination.get("total", len(students)),
-		"page": pagination.get("page", 1),
-		"limit": pagination.get("limit", len(students)),
-		"total_pages": pagination.get("total_pages", 1),
+		"total": total_count if should_fetch_all else pagination.get("total", len(students)),
+		"count": len(students),
+		"page": initial_page,
+		"limit": per_page_limit,
+		"total_pages": total_pages,
 	}
 
 
@@ -1754,7 +1800,7 @@ def import_students_from_api(students_data=None, api_url=None):
 	Imports one or more students from provided list or fetches next batch.
 	"""
 	if not students_data:
-		fetch_res = fetch_students_from_api(api_url=api_url, page=1, limit=50)
+		fetch_res = fetch_students_from_api(api_url=api_url, fetch_all=True)
 		students_data = fetch_res.get("students", [])
 
 	if isinstance(students_data, str):
@@ -1801,11 +1847,11 @@ def import_students_from_api(students_data=None, api_url=None):
 
 
 @frappe.whitelist()
-def sync_all_students_from_api(api_url=None, page=1, limit=50):
+def sync_all_students_from_api(api_url=None, page=None, limit=50, fetch_all=True):
 	"""
 	Directly fetches students from API and imports them.
 	"""
-	fetch_res = fetch_students_from_api(api_url=api_url, page=page, limit=limit)
+	fetch_res = fetch_students_from_api(api_url=api_url, page=page, limit=limit, fetch_all=fetch_all)
 	students = fetch_res.get("students", [])
 	if not students:
 		frappe.throw(_("No students returned from the API endpoint."))
@@ -2142,10 +2188,15 @@ def create_or_update_erpnext_sales_order(order_data, company=None):
 	so.company = company
 	created_at = order_data.get("createdAt")
 	so.transaction_date = str(created_at)[:10] if created_at else frappe.utils.today()
+	# transaction_date + 7 use pannuvom — data accurate-ah irukum
+	# (delivery_date past-la irundhalum ERPNext error throw pannaaது — only payment terms due_date validate aagum)
 	so.delivery_date = frappe.utils.add_days(so.transaction_date, 7)
 	so.order_type = "Shopping Cart"
 	so.currency = frappe.get_cached_value("Company", company, "default_currency") or "INR"
 	so.selling_price_list = frappe.db.get_single_value("Selling Settings", "selling_price_list") or "Standard Selling"
+	# Clear payment terms to avoid 'Due Date before Posting Date' validation error
+	so.payment_terms_template = ""
+	so.payment_schedule = []
 
 	# Warehouse
 	default_wh = "Stores - IESPL"
@@ -2308,7 +2359,14 @@ def create_or_update_erpnext_sales_order(order_data, company=None):
 				"tax_amount": shipping_charge,
 			})
 
+	# Clear address fields to avoid "Billing Address does not belong to Customer" error
+	# Address mismatch aaguthu when customer changes or duplicate customers exist
+	so.customer_address = ""
+	so.shipping_address_name = ""
+	so.contact_person = ""
+
 	so.flags.ignore_permissions = True
+	so.flags.ignore_mandatory = True
 	so.save()
 	frappe.db.commit()
 

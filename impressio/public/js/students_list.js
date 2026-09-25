@@ -237,8 +237,7 @@ function impressio_sync_students(listview) {
 	frappe.call({
 		method: "impressio.api.fetch_students_from_api",
 		args: {
-			page: 1,
-			limit: 50,
+			fetch_all: 1,
 		},
 		callback: function (r) {
 			if (!r || !r.message || !r.message.students || r.message.students.length === 0) {
@@ -255,7 +254,7 @@ function impressio_sync_students(listview) {
 			const total = students.length;
 			frappe.show_progress(__("Syncing Students"), 0, total, __("Found {0} students. Starting sync...", [total]));
 
-			const chunkSize = 5;
+			const chunkSize = 25;
 			const chunks = [];
 			for (let i = 0; i < students.length; i += chunkSize) {
 				chunks.push(students.slice(i, i + chunkSize));
@@ -272,9 +271,9 @@ function impressio_sync_students(listview) {
 					setTimeout(function () {
 						frappe.hide_progress();
 						frappe.show_alert({
-							message: __("Students Synced: {0} Created, {1} Updated", [totalCreated, totalUpdated]),
+							message: __("Students Synced: {0} Created, {1} Updated (Total: {2})", [totalCreated, totalUpdated, total]),
 							indicator: "green"
-						}, 5);
+						}, 6);
 						if (listview) {
 							listview.refresh();
 						}
@@ -288,8 +287,8 @@ function impressio_sync_students(listview) {
 				const schoolLabel = firstStudent.school_name || firstStudent.school_code || "";
 
 				const currentStatus = schoolLabel
-					? __("Importing {0} ({1})...", [nameLabel, schoolLabel])
-					: __("Importing {0}...", [nameLabel]);
+					? __("Importing {0} ({1})... ({2}/{3})", [nameLabel, schoolLabel, processedCount, total])
+					: __("Importing {0}... ({1}/{2})", [nameLabel, processedCount, total]);
 
 				frappe.show_progress(__("Syncing Students"), processedCount, total, currentStatus);
 
@@ -310,12 +309,12 @@ function impressio_sync_students(listview) {
 						frappe.show_progress(__("Syncing Students"), processedCount, total, currentStatus);
 
 						chunkIndex++;
-						setTimeout(processNextChunk, 60);
+						setTimeout(processNextChunk, 40);
 					},
 					error: function () {
 						processedCount += currentChunk.length;
 						chunkIndex++;
-						setTimeout(processNextChunk, 60);
+						setTimeout(processNextChunk, 40);
 					}
 				});
 			}
