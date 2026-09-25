@@ -1111,10 +1111,12 @@ def get_or_create_customer(quote_data):
 	# Create new customer
 	default_cg = (
 		frappe.db.get_value("Customer Group", {"is_group": 0}, "name")
+		or frappe.db.get_value("Customer Group", {}, "name")
 		or "All Customer Groups"
 	)
 	default_terr = (
 		frappe.db.get_value("Territory", {"is_group": 0}, "name")
+		or frappe.db.get_value("Territory", {}, "name")
 		or "All Territories"
 	)
 
@@ -1227,6 +1229,7 @@ def get_or_create_placeholder_item():
 	if frappe.db.exists("Item", code):
 		return code
 	ensure_item_groups_and_uom([{"item_group": "Garments"}])
+	gst_hsn = get_valid_hsn_for_item("Garments")
 	item = frappe.new_doc("Item")
 	item.item_code = code
 	item.item_name = "Quotation Custom Item"
@@ -1235,6 +1238,9 @@ def get_or_create_placeholder_item():
 	item.is_stock_item = 0
 	item.is_sales_item = 1
 	item.description = "Custom items as per external quotation"
+	meta = frappe.get_meta("Item")
+	if meta.has_field("gst_hsn_code") and gst_hsn:
+		item.gst_hsn_code = gst_hsn
 	item.flags.ignore_permissions = True
 	item.insert()
 	return code
@@ -1249,6 +1255,7 @@ def create_or_update_erpnext_quotation(quote_data, company=None):
 		company = (
 			frappe.defaults.get_user_default("company")
 			or frappe.db.get_single_value("Global Defaults", "default_company")
+			or frappe.db.get_value("Company", {}, "name")
 			or "Impressio"
 		)
 
@@ -1421,7 +1428,7 @@ def import_quotations_from_api(quote_ids=None, api_url=None, company=None):
 			else:
 				updated.append(item_info)
 		except Exception as e:
-			frappe.log_error(title=f"Failed to import Quote {qid}", message=str(e))
+			frappe.log_error(title=f"Failed to import Quote {qid}", message=frappe.get_traceback())
 			errors.append(f"Quote {qid}: {str(e)}")
 
 	total_success = len(imported) + len(updated)
