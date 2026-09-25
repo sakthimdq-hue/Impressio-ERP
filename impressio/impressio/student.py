@@ -143,9 +143,13 @@ def student_exists(school_code, enrollment_number):
 def validate_school(school_code):
     school_code = str(school_code).strip()
     if not frappe.db.exists("School", {"school_code": school_code}):
-        frappe.throw(
-            _("School with School Code '{0}' does not exist").format(school_code)
-        )
+        matched_code = frappe.db.get_value("School", {"school_name": school_code}, "school_code")
+        if not matched_code and frappe.db.exists("School", school_code):
+            matched_code = frappe.db.get_value("School", school_code, "school_code")
+        if not matched_code:
+            frappe.throw(
+                _("School with School Code '{0}' does not exist").format(school_code)
+            )
 
 
 

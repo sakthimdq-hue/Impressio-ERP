@@ -31,9 +31,17 @@ class Students(Document):
         school_code = str(self.school_code).strip()
 
         if not frappe.db.exists("School", {"school_code": school_code}):
-            frappe.throw(
-                _("School with School Code '{0}' does not exist").format(school_code)
-            )
+            # Fallback 1: Check if school_code was passed as school_name
+            matched_code = frappe.db.get_value("School", {"school_name": school_code}, "school_code")
+            # Fallback 2: Check if school_code was passed as primary key (name)
+            if not matched_code and frappe.db.exists("School", school_code):
+                matched_code = frappe.db.get_value("School", school_code, "school_code")
+            if matched_code:
+                school_code = matched_code
+            else:
+                frappe.throw(
+                    _("School with School Code '{0}' does not exist").format(school_code)
+                )
 
         # normalize
         self.school_code = school_code
