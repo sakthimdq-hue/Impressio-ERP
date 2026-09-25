@@ -60,12 +60,10 @@
   },
   {
    "fieldname": "meeting_type",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "in_list_view": 1,
    "in_preview": 1,
-   "label": "Meeting Type",
-   "link_filters": "[[\"Lead Meeting Type\",\"status\",\"=\",\"Active\"]]",
-   "options": "Lead Meeting Type"
+   "label": "Meeting Type"
   },
   {
    "fieldname": "date_and_time",

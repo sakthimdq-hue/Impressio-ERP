@@ -115,9 +115,8 @@
   },
   {
    "fieldname": "city",
-   "fieldtype": "Link",
-   "label": "City",
-   "options": "Lead City"
+   "fieldtype": "Data",
+   "label": "City"
   },
   {
    "fieldname": "pincode",
@@ -131,9 +130,8 @@
   },
   {
    "fieldname": "state",
-   "fieldtype": "Link",
-   "label": "State",
-   "options": "Lead State"
+   "fieldtype": "Data",
+   "label": "State"
   },
   {
    "fieldname": "grades_tab",

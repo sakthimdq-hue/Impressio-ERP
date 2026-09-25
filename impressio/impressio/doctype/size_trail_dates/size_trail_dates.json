@@ -53,9 +53,8 @@
   },
   {
    "fieldname": "parent_child_row",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "label": "Parent Child Row",
-   "options": "Lead HC Operations and Project Child Table",
    "read_only": 1
   },
   {
