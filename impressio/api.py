@@ -1179,6 +1179,56 @@ def get_or_create_customer(quote_data):
 	return cust.name
 
 
+def get_state_info_from_gstin(gstin):
+	"""
+	Returns (state_name, city_name) based on the first 2 digits of an Indian GSTIN.
+	This ensures India Compliance's validate_state passes without error.
+	"""
+	state_code_map = {
+		"01": ("Jammu and Kashmir", "Srinagar"),
+		"02": ("Himachal Pradesh", "Shimla"),
+		"03": ("Punjab", "Chandigarh"),
+		"04": ("Chandigarh", "Chandigarh"),
+		"05": ("Uttarakhand", "Dehradun"),
+		"06": ("Haryana", "Gurugram"),
+		"07": ("Delhi", "New Delhi"),
+		"08": ("Rajasthan", "Jaipur"),
+		"09": ("Uttar Pradesh", "Noida"),
+		"10": ("Bihar", "Patna"),
+		"11": ("Sikkim", "Gangtok"),
+		"12": ("Arunachal Pradesh", "Itanagar"),
+		"13": ("Nagaland", "Kohima"),
+		"14": ("Manipur", "Imphal"),
+		"15": ("Mizoram", "Aizawl"),
+		"16": ("Tripura", "Agartala"),
+		"17": ("Meghalaya", "Shillong"),
+		"18": ("Assam", "Guwahati"),
+		"19": ("West Bengal", "Kolkata"),
+		"20": ("Jharkhand", "Ranchi"),
+		"21": ("Odisha", "Bhubaneswar"),
+		"22": ("Chhattisgarh", "Raipur"),
+		"23": ("Madhya Pradesh", "Bhopal"),
+		"24": ("Gujarat", "Ahmedabad"),
+		"26": ("Dadra and Nagar Haveli and Daman and Diu", "Daman"),
+		"27": ("Maharashtra", "Mumbai"),
+		"29": ("Karnataka", "Bengaluru"),
+		"30": ("Goa", "Panaji"),
+		"31": ("Lakshadweep Islands", "Kavaratti"),
+		"32": ("Kerala", "Kochi"),
+		"33": ("Tamil Nadu", "Chennai"),
+		"34": ("Puducherry", "Puducherry"),
+		"35": ("Andaman and Nicobar Islands", "Port Blair"),
+		"36": ("Telangana", "Hyderabad"),
+		"37": ("Andhra Pradesh", "Vijayawada"),
+		"38": ("Ladakh", "Leh"),
+	}
+	if gstin and len(str(gstin).strip()) >= 2:
+		code = str(gstin).strip()[:2]
+		if code in state_code_map:
+			return state_code_map[code]
+	return "Tamil Nadu", "Chennai"
+
+
 def get_or_create_customer_address(customer_name, quote_data=None):
 	"""
 	Returns the customer's billing address name, creating/linking if needed.
@@ -1198,15 +1248,25 @@ def get_or_create_customer_address(customer_name, quote_data=None):
 
 	if not addr_name and quote_data:
 		try:
+			cust_gstin = quote_data.get("gstin") or quote_data.get("customer_gstin")
+			cust_state = quote_data.get("state")
+			cust_city = quote_data.get("city")
+			if cust_gstin:
+				state_from_gstin, city_from_gstin = get_state_info_from_gstin(cust_gstin)
+				cust_state = cust_state or state_from_gstin
+				cust_city = cust_city or city_from_gstin
+
 			addr = frappe.new_doc("Address")
 			addr.address_title = customer_name
 			addr.address_type = "Billing"
 			addr.is_primary_address = 1
-			addr.address_line1 = quote_data.get("customer_address") or quote_data.get("city") or "Main Address"
-			addr.city = quote_data.get("city") or "Bengaluru"
-			addr.state = quote_data.get("state") or "Karnataka"
+			addr.address_line1 = quote_data.get("customer_address") or cust_city or "Main Address"
+			addr.city = cust_city or "Bengaluru"
+			addr.state = cust_state or "Karnataka"
 			addr.pincode = str(quote_data.get("pincode") or "")
 			addr.country = quote_data.get("country") or "India"
+			if cust_gstin:
+				addr.gstin = str(cust_gstin).strip()
 			if quote_data.get("customer_phone"):
 				addr.phone = str(quote_data.get("customer_phone")).strip()
 			if quote_data.get("customer_email"):
@@ -1216,10 +1276,11 @@ def get_or_create_customer_address(customer_name, quote_data=None):
 				"link_name": customer_name,
 			})
 			addr.flags.ignore_permissions = True
-			addr.insert()
+			addr.insert(ignore_permissions=True)
 			addr_name = addr.name
 		except Exception:
-			pass
+			frappe.log_error(title="Failed to auto-create customer address", message=frappe.get_traceback())
+			addr_name = None
 
 	return addr_name
 
@@ -1227,7 +1288,8 @@ def get_or_create_customer_address(customer_name, quote_data=None):
 def get_or_create_company_address(company):
 	"""
 	Returns the company's billing address name, creating a default one if none exists.
-	This ensures India Compliance GST validations pass without throwing 'Please set Company Address Name'.
+	This ensures India Compliance GST validations pass without throwing 'Please set Company Address Name'
+	or 'Company Address Name does not belong to the Company ...'.
 	"""
 	if not company:
 		return None
@@ -1245,40 +1307,60 @@ def get_or_create_company_address(company):
 			"parent",
 		)
 
-	# 3. Check any address marked as company address
-	if not addr_name:
-		addr_name = frappe.db.get_value("Address", {"is_your_company_address": 1}, "name")
+	# 3. If found and exists, return it
+	if addr_name and frappe.db.exists("Address", addr_name):
+		return addr_name
 
-	# 4. If still not found, create a default company address
-	if not addr_name:
-		try:
-			comp_doc = frappe.get_doc("Company", company) if frappe.db.exists("Company", company) else None
-			addr = frappe.new_doc("Address")
-			addr.address_title = company
-			addr.address_type = "Billing"
-			addr.is_your_company_address = 1
-			addr.is_primary_address = 1
-			addr.address_line1 = "Head Office"
-			addr.city = "Bengaluru"
-			addr.state = "Karnataka"
-			addr.country = (comp_doc.country if comp_doc and getattr(comp_doc, "country", None) else "India")
+	# 4. Check if an address with company title already exists and ensure Dynamic Link is attached
+	existing_addr = frappe.db.get_value("Address", {"address_title": company}, "name")
+	if existing_addr:
+		if not frappe.db.exists("Dynamic Link", {"link_doctype": "Company", "link_name": company, "parent": existing_addr}):
+			try:
+				dlink = frappe.new_doc("Dynamic Link")
+				dlink.parent = existing_addr
+				dlink.parenttype = "Address"
+				dlink.parentfield = "links"
+				dlink.link_doctype = "Company"
+				dlink.link_name = company
+				dlink.flags.ignore_permissions = True
+				dlink.insert(ignore_permissions=True)
+			except Exception:
+				pass
+		return existing_addr
 
-			gstin = None
-			if comp_doc:
-				gstin = getattr(comp_doc, "gstin", None) or getattr(comp_doc, "tax_id", None)
-			if gstin:
-				addr.gstin = gstin
+	# 5. Create default company address with matching State and GSTIN
+	try:
+		comp_doc = frappe.get_doc("Company", company) if frappe.db.exists("Company", company) else None
+		gstin = None
+		if comp_doc:
+			gstin = getattr(comp_doc, "gstin", None) or getattr(comp_doc, "tax_id", None)
 
-			addr.append("links", {
-				"link_doctype": "Company",
-				"link_name": company,
-			})
-			addr.flags.ignore_permissions = True
-			addr.insert()
-			addr_name = addr.name
-		except Exception:
-			frappe.log_error(title="Failed to auto-create company address", message=frappe.get_traceback())
-			addr_name = frappe.db.get_value("Address", {}, "name")
+		state_name, city_name = get_state_info_from_gstin(gstin)
+
+		addr = frappe.new_doc("Address")
+		addr.address_title = company
+		addr.address_type = "Billing"
+		addr.is_your_company_address = 1
+		addr.is_primary_address = 1
+		addr.address_line1 = "Registered Office"
+		addr.city = city_name
+		addr.state = state_name
+		addr.country = (comp_doc.country if comp_doc and getattr(comp_doc, "country", None) else "India")
+
+		if gstin:
+			addr.gstin = str(gstin).strip()
+
+		addr.append("links", {
+			"link_doctype": "Company",
+			"link_name": company,
+		})
+		addr.flags.ignore_permissions = True
+		addr.flags.ignore_mandatory = True
+		addr.insert(ignore_permissions=True)
+		addr_name = addr.name
+	except Exception:
+		frappe.log_error(title="Failed to auto-create company address", message=frappe.get_traceback())
+		addr_name = None
 
 	return addr_name
 
