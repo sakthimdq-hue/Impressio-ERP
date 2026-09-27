@@ -114,15 +114,57 @@ def get_quotation_custom_fields():
 				"in_standard_filter": 1,
 			},
 			{
+				"fieldname": "custom_status_reason",
+				"label": "Status Reason",
+				"fieldtype": "Small Text",
+				"insert_after": "custom_external_status",
+			},
+			{
 				"fieldname": "custom_created_by_name",
 				"label": "Created By (External)",
 				"fieldtype": "Data",
-				"insert_after": "custom_external_status",
+				"insert_after": "custom_status_reason",
+			},
+			{
+				"fieldname": "custom_updated_by_name",
+				"label": "Updated By (External)",
+				"fieldtype": "Data",
+				"insert_after": "custom_created_by_name",
+			},
+			{
+				"fieldname": "custom_lead_number",
+				"label": "External Lead Number",
+				"fieldtype": "Data",
+				"insert_after": "custom_updated_by_name",
+			},
+			{
+				"fieldname": "custom_lead_id",
+				"label": "External Lead ID",
+				"fieldtype": "Int",
+				"insert_after": "custom_lead_number",
+			},
+			{
+				"fieldname": "custom_converted_school_id",
+				"label": "Converted School ID",
+				"fieldtype": "Int",
+				"insert_after": "custom_lead_id",
+			},
+			{
+				"fieldname": "custom_requested_by_school_id",
+				"label": "Requested School ID",
+				"fieldtype": "Int",
+				"insert_after": "custom_converted_school_id",
+			},
+			{
+				"fieldname": "custom_bulk_request_id",
+				"label": "Bulk Request ID",
+				"fieldtype": "Data",
+				"insert_after": "custom_requested_by_school_id",
 			},
 			{
 				"fieldname": "custom_agent_col_break",
 				"fieldtype": "Column Break",
-				"insert_after": "custom_created_by_name",
+				"insert_after": "custom_bulk_request_id",
 			},
 			{
 				"fieldname": "custom_agent_name",
@@ -138,10 +180,22 @@ def get_quotation_custom_fields():
 				"insert_after": "custom_agent_name",
 			},
 			{
+				"fieldname": "custom_agent_commission_plan_id",
+				"label": "Commission Plan ID",
+				"fieldtype": "Data",
+				"insert_after": "custom_agent_id",
+			},
+			{
+				"fieldname": "custom_agent_commission_plan_name",
+				"label": "Commission Plan Name",
+				"fieldtype": "Data",
+				"insert_after": "custom_agent_commission_plan_id",
+			},
+			{
 				"fieldname": "custom_customer_phone",
 				"label": "Customer Phone",
 				"fieldtype": "Data",
-				"insert_after": "custom_agent_id",
+				"insert_after": "custom_agent_commission_plan_name",
 			},
 			{
 				"fieldname": "custom_customer_email",
@@ -214,6 +268,12 @@ def get_quotation_custom_fields():
 				"label": "Grand Total (External)",
 				"fieldtype": "Currency",
 				"insert_after": "custom_total_gst_amount",
+			},
+			{
+				"fieldname": "custom_api_total_qty",
+				"label": "Total Qty (External)",
+				"fieldtype": "Int",
+				"insert_after": "custom_api_grand_total",
 			},
 		],
 		"Quotation Item": [
@@ -309,6 +369,18 @@ def get_quotation_custom_fields():
 				"label": "School Commission",
 				"fieldtype": "Currency",
 				"insert_after": "custom_agent_commission_amount",
+			},
+			{
+				"fieldname": "custom_agent_commission_plan_id",
+				"label": "Commission Plan ID",
+				"fieldtype": "Data",
+				"insert_after": "custom_school_commission_amount",
+			},
+			{
+				"fieldname": "custom_agent_commission_plan_name",
+				"label": "Commission Plan Name",
+				"fieldtype": "Data",
+				"insert_after": "custom_agent_commission_plan_id",
 			},
 		],
 	}
@@ -425,6 +497,12 @@ def get_student_custom_fields():
 				"fieldtype": "Small Text",
 				"insert_after": "custom_subject_names",
 			},
+			{
+				"fieldname": "custom_parent_email",
+				"label": "Parent Email",
+				"fieldtype": "Data",
+				"insert_after": "custom_full_address",
+			},
 		]
 	}
 
@@ -471,10 +549,16 @@ def get_sales_order_custom_fields():
 				"insert_after": "custom_student_id",
 			},
 			{
+				"fieldname": "custom_user_id",
+				"label": "Website User ID",
+				"fieldtype": "Data",
+				"insert_after": "custom_ordered_by",
+			},
+			{
 				"fieldname": "custom_external_order_status",
 				"label": "External Order Status",
 				"fieldtype": "Data",
-				"insert_after": "custom_ordered_by",
+				"insert_after": "custom_user_id",
 				"in_list_view": 1,
 			},
 			{
@@ -483,13 +567,195 @@ def get_sales_order_custom_fields():
 				"fieldtype": "Currency",
 				"insert_after": "custom_external_order_status",
 			},
+			{
+				"fieldname": "custom_order_subtotal",
+				"label": "External Subtotal",
+				"fieldtype": "Currency",
+				"insert_after": "custom_shipping_charges",
+			},
+			{
+				"fieldname": "custom_shipping_full_address",
+				"label": "Shipping Address (External)",
+				"fieldtype": "Small Text",
+				"insert_after": "custom_order_subtotal",
+			},
+			{
+				"fieldname": "custom_order_notes",
+				"label": "Order Notes",
+				"fieldtype": "Small Text",
+				"insert_after": "custom_shipping_full_address",
+			},
+		],
+		"Sales Order Item": [
+			{
+				"fieldname": "custom_product_id",
+				"label": "External Product ID",
+				"fieldtype": "Int",
+				"insert_after": "item_name",
+				"read_only": 1,
+			},
+			{
+				"fieldname": "custom_selected_size",
+				"label": "Selected Size",
+				"fieldtype": "Data",
+				"insert_after": "custom_product_id",
+				"in_list_view": 1,
+			},
+			{
+				"fieldname": "custom_category_name",
+				"label": "Category",
+				"fieldtype": "Data",
+				"insert_after": "custom_selected_size",
+			},
+			{
+				"fieldname": "custom_is_bundle",
+				"label": "Is Bundle",
+				"fieldtype": "Check",
+				"insert_after": "custom_category_name",
+			},
+			{
+				"fieldname": "custom_school_unit_price",
+				"label": "School Unit Price",
+				"fieldtype": "Currency",
+				"insert_after": "rate",
+			},
+			{
+				"fieldname": "custom_calc_msp",
+				"label": "Calculated MSP",
+				"fieldtype": "Currency",
+				"insert_after": "custom_school_unit_price",
+			},
+			{
+				"fieldname": "custom_image_url",
+				"label": "Product Image URL",
+				"fieldtype": "Data",
+				"insert_after": "image",
+			},
+		],
+	}
+
+
+def get_item_custom_fields():
+	"""Custom fields for Item to capture external Impressio Product data"""
+	return {
+		"Item": [
+			{
+				"fieldname": "custom_impressio_section",
+				"label": "Impressio Product Info",
+				"fieldtype": "Section Break",
+				"insert_after": "description",
+				"collapsible": 1,
+			},
+			{
+				"fieldname": "custom_external_product_id",
+				"label": "External Product ID",
+				"fieldtype": "Int",
+				"insert_after": "custom_impressio_section",
+				"in_list_view": 1,
+				"in_standard_filter": 1,
+				"read_only": 1,
+			},
+			{
+				"fieldname": "custom_website_display_name",
+				"label": "Website Display Name",
+				"fieldtype": "Data",
+				"insert_after": "custom_external_product_id",
+			},
+			{
+				"fieldname": "custom_tier",
+				"label": "Tier",
+				"fieldtype": "Data",
+				"insert_after": "custom_website_display_name",
+			},
+			{
+				"fieldname": "custom_school_name",
+				"label": "School Name",
+				"fieldtype": "Link",
+				"options": "School",
+				"insert_after": "custom_tier",
+			},
+			{
+				"fieldname": "custom_grade",
+				"label": "Grade",
+				"fieldtype": "Link",
+				"options": "Grade",
+				"insert_after": "custom_school_name",
+			},
+			{
+				"fieldname": "custom_landed_cost",
+				"label": "Landed Cost",
+				"fieldtype": "Currency",
+				"insert_after": "custom_grade",
+			},
+			{
+				"fieldname": "custom_build_cost",
+				"label": "Build Cost",
+				"fieldtype": "Currency",
+				"insert_after": "custom_landed_cost",
+			},
+			{
+				"fieldname": "custom_operational_cost",
+				"label": "Operational Cost",
+				"fieldtype": "Currency",
+				"insert_after": "custom_build_cost",
+			},
+			{
+				"fieldname": "custom_calc_msp",
+				"label": "Calculated MSP",
+				"fieldtype": "Currency",
+				"insert_after": "custom_operational_cost",
+			},
+			{
+				"fieldname": "custom_school_unit_price",
+				"label": "School Unit Price",
+				"fieldtype": "Currency",
+				"insert_after": "custom_calc_msp",
+			},
+			{
+				"fieldname": "custom_mrp",
+				"label": "MRP",
+				"fieldtype": "Currency",
+				"insert_after": "custom_school_unit_price",
+			},
+			{
+				"fieldname": "custom_gst_rate",
+				"label": "GST Rate %",
+				"fieldtype": "Percent",
+				"insert_after": "custom_mrp",
+			},
+			{
+				"fieldname": "custom_is_bundle",
+				"label": "Is Bundle",
+				"fieldtype": "Check",
+				"insert_after": "custom_gst_rate",
+			},
+			{
+				"fieldname": "custom_parent_bundle",
+				"label": "Parent Bundle",
+				"fieldtype": "Link",
+				"options": "Item",
+				"insert_after": "custom_is_bundle",
+			},
+			{
+				"fieldname": "custom_parent_sub_bundle",
+				"label": "Parent Sub Bundle",
+				"fieldtype": "Link",
+				"options": "Item",
+				"insert_after": "custom_parent_bundle",
+			},
+			{
+				"fieldname": "custom_image_urls",
+				"label": "All Image URLs",
+				"fieldtype": "Small Text",
+				"insert_after": "custom_parent_sub_bundle",
+			},
 		]
 	}
 
 
 @frappe.whitelist()
 def setup_all_custom_fields():
-	"""Setup all custom fields needed for warehouse operations, packing materials, external quotations, external orders, and students"""
+	"""Setup all custom fields needed for warehouse operations, packing materials, external quotations, external orders, students, and items"""
 	wh_fields = get_warehouse_custom_fields()
 	create_custom_fields(wh_fields, update=True)
 
@@ -504,6 +770,9 @@ def setup_all_custom_fields():
 
 	student_fields = get_student_custom_fields()
 	create_custom_fields(student_fields, update=True)
+
+	item_fields = get_item_custom_fields()
+	create_custom_fields(item_fields, update=True)
 
 	frappe.db.commit()
 	frappe.clear_cache()

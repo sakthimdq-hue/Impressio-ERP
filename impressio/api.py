@@ -84,9 +84,19 @@ def normalize_and_flatten_products(product_list, parent_bundle=None, parent_sub_
 		raw_gst = safe_flt(it.get("gst_rate") if it.get("gst_rate") is not None else it.get("gst_percent", 0.0))
 		gst_pct = raw_gst * 100 if (0.0 < raw_gst < 1.0) else raw_gst
 
+		raw_images = it.get("image_urls") or []
+		if isinstance(raw_images, str):
+			raw_images = [u.strip() for u in raw_images.split("\n") if u.strip()]
+		elif not isinstance(raw_images, list):
+			raw_images = []
+
 		img_url = it.get("image_url")
-		if not img_url and it.get("image_urls") and isinstance(it.get("image_urls"), list) and len(it.get("image_urls")) > 0:
-			img_url = it.get("image_urls")[0]
+		if not img_url and raw_images:
+			img_url = raw_images[0]
+		elif img_url and img_url not in raw_images:
+			raw_images = [img_url] + raw_images
+
+		all_image_urls_str = "\n".join(raw_images) if raw_images else (img_url or "")
 
 		is_bundle = 1 if it.get("is_bundle") else 0
 		bundle_items = it.get("bundle_items") or []
@@ -105,6 +115,8 @@ def normalize_and_flatten_products(product_list, parent_bundle=None, parent_sub_
 			"gst_rate": round(gst_pct, 2),
 			"gst_percent": round(gst_pct, 2),
 			"image_url": img_url,
+			"image_urls": raw_images,
+			"custom_image_urls": all_image_urls_str,
 			"is_bundle": is_bundle,
 			"bundle_items": bundle_items,
 			"description": it.get("description") or raw_name,
@@ -586,6 +598,21 @@ def import_pricing_items(items_data=None):
 
 			if meta.has_field("custom_mrp") and mrp is not None:
 				item_values["custom_mrp"] = mrp
+
+			if item.get("image_url"):
+				item_values["image"] = item.get("image_url")
+			if meta.has_field("custom_image_urls") and item.get("custom_image_urls"):
+				item_values["custom_image_urls"] = item.get("custom_image_urls")
+			if meta.has_field("custom_external_product_id") and (item.get("id") or item.get("product_id")):
+				item_values["custom_external_product_id"] = item.get("id") or item.get("product_id")
+			if meta.has_field("custom_website_display_name") and item.get("website_display_name"):
+				item_values["custom_website_display_name"] = item.get("website_display_name")
+			if meta.has_field("custom_school_unit_price") and item.get("school_unit_price") is not None:
+				item_values["custom_school_unit_price"] = safe_flt(item.get("school_unit_price"))
+			if meta.has_field("custom_calc_msp") and item.get("calc_msp") is not None:
+				item_values["custom_calc_msp"] = safe_flt(item.get("calc_msp"))
+			if meta.has_field("custom_is_bundle"):
+				item_values["custom_is_bundle"] = 1 if item.get("is_bundle") else 0
 
 			if frappe.db.exists("Item", item_code):
 				# Update existing item
@@ -1481,9 +1508,18 @@ def create_or_update_erpnext_quotation(quote_data, company=None):
 	quotation.custom_school_name = quote_data.get("school_name") or quote_data.get("customer_name")
 	quotation.custom_academic_year = quote_data.get("academic_year")
 	quotation.custom_external_status = quote_data.get("status")
+	quotation.custom_status_reason = quote_data.get("status_reason")
 	quotation.custom_created_by_name = quote_data.get("created_by_name")
+	quotation.custom_updated_by_name = quote_data.get("updated_by_name")
+	quotation.custom_lead_number = quote_data.get("lead_number")
+	quotation.custom_lead_id = quote_data.get("lead_id")
+	quotation.custom_converted_school_id = quote_data.get("converted_school_id")
+	quotation.custom_requested_by_school_id = quote_data.get("requested_by_school_id")
+	quotation.custom_bulk_request_id = str(quote_data.get("bulk_request_id") or "") if quote_data.get("bulk_request_id") else None
 	quotation.custom_agent_name = quote_data.get("agent_name")
 	quotation.custom_agent_id = str(quote_data.get("agent_id") or "")
+	quotation.custom_agent_commission_plan_id = str(quote_data.get("agent_commission_plan_id") or "")
+	quotation.custom_agent_commission_plan_name = quote_data.get("agent_commission_plan_name")
 	quotation.custom_customer_phone = quote_data.get("customer_phone")
 	quotation.custom_customer_email = quote_data.get("customer_email")
 	quotation.custom_city = quote_data.get("city")
@@ -1495,6 +1531,7 @@ def create_or_update_erpnext_quotation(quote_data, company=None):
 	quotation.custom_total_before_gst = safe_flt(quote_data.get("total_before_gst"))
 	quotation.custom_total_gst_amount = safe_flt(quote_data.get("total_gst_amount") or quote_data.get("total_gst"))
 	quotation.custom_api_grand_total = safe_flt(quote_data.get("grand_total"))
+	quotation.custom_api_total_qty = safe_flt(quote_data.get("total_qty"))
 	if quote_data.get("notes"):
 		quotation.notes = quote_data.get("notes")
 
@@ -1553,6 +1590,8 @@ def create_or_update_erpnext_quotation(quote_data, company=None):
 				"custom_final_mrp_per_unit": final_mrp,
 				"custom_agent_commission_amount": safe_flt(it.get("agent_commission_amount") or it.get("product_comm_amount")),
 				"custom_school_commission_amount": safe_flt(it.get("school_commission_amount")),
+				"custom_agent_commission_plan_id": str(it.get("agent_commission_plan_id") or quote_data.get("agent_commission_plan_id") or ""),
+				"custom_agent_commission_plan_name": it.get("agent_commission_plan_name") or quote_data.get("agent_commission_plan_name"),
 			})
 	else:
 		# Fallback item if no line items in the external quotation
@@ -1668,7 +1707,7 @@ def sync_all_products_from_api(api_url=None):
 
 def get_or_create_student_guardian(guardian_name, mobile, email=None, relation=None):
 	"""Gets or creates a Guardian document"""
-	if not guardian_name and not mobile:
+	if not guardian_name and not mobile and not email:
 		return None
 
 	clean_mobile = re.sub(r"\D", "", str(mobile or ""))
@@ -1682,17 +1721,36 @@ def get_or_create_student_guardian(guardian_name, mobile, email=None, relation=N
 		guardian_doc_name = frappe.db.get_value("Guardians", {"mobile_number": clean_mobile}, "name")
 	if not guardian_doc_name and guardian_name:
 		guardian_doc_name = frappe.db.get_value("Guardians", {"guardian_name": guardian_name}, "name")
+	if not guardian_doc_name and email:
+		guardian_doc_name = frappe.db.get_value("Guardians", {"email": email}, "name")
 
 	if not guardian_doc_name:
 		try:
 			g = frappe.new_doc("Guardians")
-			g.guardian_name = guardian_name or f"Guardian {clean_mobile}"
+			g.guardian_name = guardian_name or f"Guardian {clean_mobile or email}"
 			g.mobile_number = clean_mobile
+			g.email = email
 			g.email_address = email
 			g.relation = relation or "Father"
 			g.flags.ignore_permissions = True
 			g.insert()
 			guardian_doc_name = g.name
+		except Exception:
+			pass
+	else:
+		try:
+			g = frappe.get_doc("Guardians", guardian_doc_name)
+			changed = False
+			if email and (g.email != email or g.email_address != email):
+				g.email = email
+				g.email_address = email
+				changed = True
+			if clean_mobile and not g.mobile_number:
+				g.mobile_number = clean_mobile
+				changed = True
+			if changed:
+				g.flags.ignore_permissions = True
+				g.save()
 		except Exception:
 			pass
 
@@ -1885,7 +1943,9 @@ def create_or_update_erpnext_student(student_data):
 		clean_mobile = clean_mobile[2:]
 	doc.student_mobile_number = clean_mobile
 
-	email = student_data.get("parent_email") or ""
+	parent_email = student_data.get("parent_email") or ""
+	student_email = student_data.get("student_email") or student_data.get("email") or ""
+	email = student_email or parent_email
 	if not email or "@" not in email:
 		clean_ad = re.sub(r"[^a-zA-Z0-9]", "", admission_no).lower()
 		clean_sc = re.sub(r"[^a-zA-Z0-9]", "", school_code).lower()
@@ -1911,8 +1971,77 @@ def create_or_update_erpnext_student(student_data):
 	doc.custom_house_name = student_data.get("house_name")
 	doc.custom_customer_mapping_status = student_data.get("customer_mapping_status")
 	doc.custom_customer_mapped_on = student_data.get("customer_mapped_on")
-	doc.custom_subject_names = student_data.get("subject_names")
 	doc.custom_full_address = student_data.get("address")
+	doc.custom_parent_email = parent_email
+
+	# Parse subjects from API
+	raw_subjects = student_data.get("subjects") or []
+	if not raw_subjects and student_data.get("subject_names"):
+		raw_names = student_data.get("subject_names")
+		if isinstance(raw_names, str):
+			raw_subjects = [s.strip() for s in raw_names.split(",") if s.strip()]
+		elif isinstance(raw_names, list):
+			raw_subjects = raw_names
+
+	subject_names = []
+	for s in raw_subjects:
+		if isinstance(s, dict):
+			s_name = s.get("name") or s.get("subject_name") or ""
+		else:
+			s_name = str(s).strip()
+		if s_name and s_name not in subject_names:
+			subject_names.append(s_name)
+
+	doc.custom_subject_names = ", ".join(subject_names) if subject_names else (student_data.get("subject_names") or "")
+
+	# Populate Subject Group child table
+	doc.subject_group = []
+	if subject_names:
+		matched_rows = []
+		school_rec = None
+		if school_name:
+			school_rec = frappe.db.get_value("School", {"school_name": school_name}, "name")
+		if not school_rec and school_code:
+			school_rec = frappe.db.get_value("School", {"school_code": school_code}, "name")
+
+		if school_rec:
+			try:
+				school_doc = frappe.get_doc("School", school_rec)
+				if school_doc.get("books_details_costing"):
+					grade_val = str(grade_name or doc.grade or "").strip().lower()
+					for crow in school_doc.books_details_costing:
+						crow_grade = str(crow.grade or "").strip().lower()
+						if not grade_val or crow_grade == grade_val:
+							for s_name in subject_names:
+								s_lower = s_name.strip().lower()
+								if (crow.bundle_name and s_lower in crow.bundle_name.lower()) or \
+								   (crow.sub_bundle_name and s_lower in crow.sub_bundle_name.lower()) or \
+								   (crow.product_name and s_lower in crow.product_name.lower()):
+									matched_rows.append({
+										"bundle_name": crow.bundle_name or s_name,
+										"sub_bundle_name": crow.sub_bundle_name or s_name,
+										"product_name": crow.product_name or s_name,
+										"_subject": s_name
+									})
+			except Exception:
+				pass
+
+		added_subjects = set()
+		for m in matched_rows:
+			doc.append("subject_group", {
+				"bundle_name": m["bundle_name"],
+				"sub_bundle_name": m["sub_bundle_name"],
+				"product_name": m["product_name"],
+			})
+			added_subjects.add(m["_subject"])
+
+		for s_name in subject_names:
+			if s_name not in added_subjects:
+				doc.append("subject_group", {
+					"bundle_name": s_name,
+					"sub_bundle_name": s_name,
+					"product_name": s_name,
+				})
 
 	# Guardians child table
 	parent_name = student_data.get("parent_name")
@@ -1920,15 +2049,15 @@ def create_or_update_erpnext_student(student_data):
 	if relation not in ["Mother", "Father", "Others"]:
 		relation = "Others"
 
-	if parent_name or clean_mobile:
-		guardian_ref = get_or_create_student_guardian(parent_name, clean_mobile, email=student_data.get("parent_email"), relation=relation)
+	if parent_name or clean_mobile or parent_email:
+		guardian_ref = get_or_create_student_guardian(parent_name, clean_mobile, email=parent_email, relation=relation)
 		if guardian_ref:
 			doc.guardians = []
 			doc.append("guardians", {
 				"guardian": guardian_ref,
 				"guardian_name": parent_name or guardian_ref,
 				"relation": relation,
-				"email": student_data.get("parent_email") or "",
+				"email": parent_email,
 				"phone_no": clean_mobile or "",
 			})
 
@@ -2428,6 +2557,27 @@ def create_or_update_erpnext_sales_order(order_data, company=None):
 		so.custom_ordered_by = order_data.get("orderedBy")
 	if hasattr(so, "custom_external_order_status"):
 		so.custom_external_order_status = order_data.get("status")
+	if hasattr(so, "custom_user_id") and order_data.get("userId"):
+		so.custom_user_id = str(order_data.get("userId"))
+	if hasattr(so, "custom_order_subtotal"):
+		so.custom_order_subtotal = safe_flt(order_data.get("subtotal"))
+	if hasattr(so, "custom_order_notes") and order_data.get("notes"):
+		so.custom_order_notes = order_data.get("notes")
+
+	# Formatted shipping address
+	if addr_dict:
+		addr_parts = [
+			addr_dict.get("fullName"),
+			addr_dict.get("house") if addr_dict.get("house") != "NA" else None,
+			addr_dict.get("area"),
+			addr_dict.get("city"),
+			addr_dict.get("state"),
+			f"PIN: {addr_dict.get('pincode')}" if addr_dict.get("pincode") else None,
+			f"Phone: {addr_dict.get('mobile')}" if addr_dict.get("mobile") else None,
+		]
+		formatted_addr = ", ".join([p for p in addr_parts if p and str(p).strip()])
+		if hasattr(so, "custom_shipping_full_address"):
+			so.custom_shipping_full_address = formatted_addr
 
 	# Extract order items
 	raw_items = order_data.get("items", [])
@@ -2518,6 +2668,17 @@ def create_or_update_erpnext_sales_order(order_data, company=None):
 			item_row["custom_selected_size"] = it.get("selectedSize") or it.get("size")
 		if frappe.db.has_column("Sales Order Item", "custom_product_id"):
 			item_row["custom_product_id"] = it.get("product_id") or it.get("id")
+		if frappe.db.has_column("Sales Order Item", "custom_category_name"):
+			item_row["custom_category_name"] = category
+		if frappe.db.has_column("Sales Order Item", "custom_is_bundle"):
+			item_row["custom_is_bundle"] = 1 if it.get("is_bundle") else 0
+		if frappe.db.has_column("Sales Order Item", "custom_school_unit_price"):
+			item_row["custom_school_unit_price"] = safe_flt(it.get("school_unit_price"))
+		if frappe.db.has_column("Sales Order Item", "custom_calc_msp"):
+			item_row["custom_calc_msp"] = safe_flt(it.get("calc_msp"))
+		if frappe.db.has_column("Sales Order Item", "custom_image_url"):
+			imgs = it.get("image_urls") or []
+			item_row["custom_image_url"] = imgs[0] if imgs and isinstance(imgs, list) else ""
 
 		so.append("items", item_row)
 
