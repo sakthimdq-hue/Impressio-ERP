@@ -2446,6 +2446,8 @@ def create_or_update_erpnext_sales_order(order_data, company=None):
 			frappe.db.get_value("School", {"school_name": order_school}, "name")
 			or frappe.db.get_value("School", {"school_code": order_school}, "name")
 		)
+		if not s_link:
+			s_link = ensure_school(order_school, order_school)
 		if s_link:
 			so.custom_student_school = s_link
 
