@@ -25,23 +25,60 @@ class Students(Document):
     # SCHOOL VALIDATION (BY school_code FIELD)
     # ----------------------------------------------------
     def validate_school_code(self):
+        # 1. If school_code is empty, try to derive from custom_school_name or custom_school_id
         if not self.school_code:
-            frappe.throw(_("School Code is mandatory"))
+            if self.get("custom_school_name"):
+                matched = frappe.db.get_value("School", {"school_name": self.custom_school_name}, "school_code")
+                if matched:
+                    self.school_code = matched
+            if not self.school_code and self.get("custom_school_id"):
+                self.school_code = f"SCH-{self.custom_school_id}"
+            if not self.school_code:
+                self.school_code = "CPS"
 
         school_code = str(self.school_code).strip()
 
         if not frappe.db.exists("School", {"school_code": school_code}):
-            # Fallback 1: Check if school_code was passed as school_name
-            matched_code = frappe.db.get_value("School", {"school_name": school_code}, "school_code")
-            # Fallback 2: Check if school_code was passed as primary key (name)
+            # Fallback 1: Check by custom_school_name
+            matched_code = None
+            if self.get("custom_school_name"):
+                matched_code = frappe.db.get_value("School", {"school_name": self.custom_school_name}, "school_code")
+            # Fallback 2: Check if school_code was passed as school_name
+            if not matched_code:
+                matched_code = frappe.db.get_value("School", {"school_name": school_code}, "school_code")
+            # Fallback 3: Check if school_code was passed as primary key (name)
             if not matched_code and frappe.db.exists("School", school_code):
                 matched_code = frappe.db.get_value("School", school_code, "school_code")
+            # Fallback 4: Check by custom_school_id
+            if not matched_code and self.get("custom_school_id") and frappe.db.has_column("School", "custom_school_id"):
+                matched_code = frappe.db.get_value("School", {"custom_school_id": self.custom_school_id}, "school_code")
+
             if matched_code:
                 school_code = matched_code
             else:
-                frappe.throw(
-                    _("School with School Code '{0}' does not exist").format(school_code)
-                )
+                # Auto-create missing School using school_name and school_code so student import NEVER fails
+                target_name = self.get("custom_school_name") or school_code
+                try:
+                    new_sc = frappe.new_doc("School")
+                    new_sc.school_code = school_code
+                    new_sc.school_name = target_name
+                    new_sc.status = "Active"
+                    new_sc.country = "India"
+                    if self.get("custom_school_city"):
+                        new_sc.city = self.get("custom_school_city")
+                    if self.get("custom_school_state"):
+                        new_sc.state = self.get("custom_school_state")
+                    new_sc.flags.ignore_permissions = True
+                    new_sc.flags.ignore_links = True
+                    new_sc.insert()
+                    frappe.db.commit()
+                except Exception as sc_err:
+                    # If insert failed because school_name already exists with different code, fetch that code
+                    existing_by_name = frappe.db.get_value("School", {"school_name": target_name}, "school_code")
+                    if existing_by_name:
+                        school_code = existing_by_name
+                    else:
+                        frappe.log_error(title=f"Auto-create School failed for {school_code}", message=str(sc_err))
 
         # normalize
         self.school_code = school_code

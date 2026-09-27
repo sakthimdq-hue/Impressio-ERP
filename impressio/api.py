@@ -1803,17 +1803,26 @@ def create_or_update_erpnext_student(student_data):
 	school_code = student_data.get("school_code")
 	school_city = student_data.get("school_city")
 	school_state = student_data.get("school_state")
+	school_id = student_data.get("school_id")
 
-	if not school_code and school_name:
-		school_code = frappe.db.get_value("School", {"school_name": school_name}, "school_code")
-	if not school_code:
-		school_code = "CPS"
+	# 1. Resolve school by school_name or existing school_code
+	actual_code = None
+	if school_name:
+		actual_code = frappe.db.get_value("School", {"school_name": school_name}, "school_code")
+	if not actual_code and school_code:
+		actual_code = frappe.db.get_value("School", {"school_code": school_code}, "school_code")
+	if not actual_code and school_id and frappe.db.has_column("School", "custom_school_id"):
+		actual_code = frappe.db.get_value("School", {"custom_school_id": school_id}, "school_code")
 
-	resolved_school = ensure_school(school_code, school_name, school_city, school_state)
-	if resolved_school and frappe.db.exists("School", resolved_school):
-		actual_code = frappe.db.get_value("School", resolved_school, "school_code")
-		if actual_code:
-			school_code = actual_code
+	if actual_code:
+		school_code = actual_code
+	else:
+		# Auto-create or resolve via ensure_school
+		resolved_school = ensure_school(school_code or (f"SCH-{school_id}" if school_id else "CPS"), school_name, school_city, school_state)
+		if resolved_school and frappe.db.exists("School", resolved_school):
+			actual_code = frappe.db.get_value("School", resolved_school, "school_code")
+			if actual_code:
+				school_code = actual_code
 
 	grade_name = student_data.get("grade_name")
 	if grade_name:
@@ -1835,6 +1844,12 @@ def create_or_update_erpnext_student(student_data):
 	else:
 		doc = frappe.new_doc("Students")
 		is_new = True
+
+	# Set custom school metadata first so validator has access to it
+	doc.custom_school_id = school_id
+	doc.custom_school_name = school_name
+	doc.custom_school_city = school_city
+	doc.custom_school_state = school_state
 
 	# Name parsing
 	full_name = (student_data.get("name") or "").strip()
@@ -2190,7 +2205,8 @@ def get_or_create_order_customer(order_data):
 		or "All Customer Groups"
 	)
 	default_terr = (
-		frappe.db.get_value("Territory", {"is_group": 0}, "name")
+		frappe.db.get_value("Territory", {"territory_name": "India"}, "name")
+		or frappe.db.get_value("Territory", {"name": "India"}, "name")
 		or "All Territories"
 	)
 
@@ -2208,21 +2224,24 @@ def get_or_create_order_customer(order_data):
 	# 3. Create Address linked to Customer if address details exist
 	house = (addr_dict.get("house") or "").strip()
 	area = (addr_dict.get("area") or "").strip()
-	city = (addr_dict.get("city") or "Madurai").strip()
-	state = (addr_dict.get("state") or "Tamil Nadu").strip()
+	city = (addr_dict.get("city") or "").strip()
+	state = (addr_dict.get("state") or "").strip()
 	pincode = (addr_dict.get("pincode") or "").strip()
 
 	lines = [x for x in [house, area] if x and x != "NA"]
-	address_line1 = ", ".join(lines) if lines else (city or "Main Address")
+	address_line1 = ", ".join(lines) if lines else (city or area or "Main Address")
 
 	try:
 		addr = frappe.new_doc("Address")
 		addr.address_title = customer_name
 		addr.address_type = "Billing"
 		addr.address_line1 = address_line1
-		addr.city = city
-		addr.state = state
-		addr.pincode = str(pincode)
+		if city:
+			addr.city = city
+		if state:
+			addr.state = state
+		if pincode:
+			addr.pincode = str(pincode)
 		addr.country = "India"
 		if clean_mobile:
 			addr.phone = clean_mobile
@@ -2410,52 +2429,62 @@ def create_or_update_erpnext_sales_order(order_data, company=None):
 	if hasattr(so, "custom_external_order_status"):
 		so.custom_external_order_status = order_data.get("status")
 
-	# Student link resolution
-	student_id = order_data.get("studentId")
-	student_name = order_data.get("studentName")
-	student_doc_name = None
-	if student_id:
-		student_doc_name = frappe.db.get_value("Students", {"enrollment_number": student_id}, "name")
-		if not student_doc_name:
-			# Match by suffix (e.g. 0363 in GV-0363)
-			clean_suffix = re.sub(r"\D", "", student_id)
-			if clean_suffix:
-				matching = frappe.db.get_value("Students", {"enrollment_number": ["like", f"%{clean_suffix}%"]}, "name")
-				if matching:
-					student_doc_name = matching
-	if not student_doc_name and student_name:
-		student_doc_name = frappe.db.get_value("Students", {"first_name": student_name.split()[0], "last_name": student_name.split()[-1] if len(student_name.split()) > 1 else ""}, "name")
-
-	if student_doc_name:
-		st_info = frappe.db.get_value("Students", student_doc_name, ["school_code", "grade"], as_dict=True)
-		so.student = student_doc_name
-		if st_info:
-			sc_code = st_info.get("school_code")
-			school_link = frappe.db.get_value("School", {"school_code": sc_code}, "name") if sc_code else None
-			if not school_link and sc_code and frappe.db.exists("School", sc_code):
-				school_link = sc_code
-			so.custom_student_school = school_link
-			so.custom_student_grade = ensure_grade(st_info.get("grade"))
-
 	# Extract order items
 	raw_items = order_data.get("items", [])
 
-	# Fallback school & grade from order items if not set from student
-	if not so.get("custom_student_school") and raw_items:
-		for rit in raw_items:
-			sc_name = rit.get("school_name")
-			if sc_name:
-				s_link = frappe.db.get_value("School", {"school_name": sc_name}, "name") or frappe.db.get_value("School", {"school_code": sc_name}, "name")
-				if s_link:
-					so.custom_student_school = s_link
-					break
+	# 1. School & Grade directly from API items (always truthful to the order)
+	order_school = None
+	order_grade = None
+	for rit in raw_items:
+		if not order_school and rit.get("school_name"):
+			order_school = rit.get("school_name")
+		if not order_grade and rit.get("grade_name"):
+			order_grade = rit.get("grade_name")
 
-	if not so.get("custom_student_grade") and raw_items:
-		for rit in raw_items:
-			gr_name = rit.get("grade_name")
-			if gr_name:
-				so.custom_student_grade = ensure_grade(gr_name)
-				break
+	if order_school:
+		s_link = (
+			frappe.db.get_value("School", {"school_name": order_school}, "name")
+			or frappe.db.get_value("School", {"school_code": order_school}, "name")
+		)
+		if s_link:
+			so.custom_student_school = s_link
+
+	if order_grade:
+		so.custom_student_grade = ensure_grade(order_grade)
+
+	# 2. Strict Student link resolution (no fuzzy mismatch across grades)
+	student_id = order_data.get("studentId")
+	student_name = order_data.get("studentName")
+	student_doc_name = None
+
+	if student_id:
+		student_doc_name = frappe.db.get_value("Students", {"enrollment_number": student_id}, "name")
+		if not student_doc_name and frappe.db.has_column("Students", "custom_student_code"):
+			student_doc_name = frappe.db.get_value("Students", {"custom_student_code": student_id}, "name")
+		if not student_doc_name and frappe.db.has_column("Students", "custom_external_student_id"):
+			clean_digits = re.sub(r"\D", "", str(student_id))
+			if clean_digits:
+				student_doc_name = frappe.db.get_value("Students", {"custom_external_student_id": int(clean_digits)}, "name")
+
+	# If searching by name, strictly ensure grade matches so a Grade 12 student isn't assigned to a Grade 1 order
+	if not student_doc_name and student_name and order_grade:
+		first = student_name.split()[0]
+		student_doc_name = frappe.db.get_value(
+			"Students",
+			{"first_name": first, "grade": ["like", f"%{order_grade}%"]},
+			"name"
+		)
+
+	if student_doc_name:
+		so.student = student_doc_name
+		# Only set school if not already set from items
+		if not so.get("custom_student_school"):
+			sc_code = frappe.db.get_value("Students", student_doc_name, "school_code")
+			if sc_code:
+				so.custom_student_school = (
+					frappe.db.get_value("School", {"school_code": sc_code}, "name")
+					or (sc_code if frappe.db.exists("School", sc_code) else None)
+				)
 
 	# Items and Sub-items
 	so.items = []
@@ -2465,7 +2494,8 @@ def create_or_update_erpnext_sales_order(order_data, company=None):
 	for it in raw_items:
 		item_code = get_or_create_item_for_order_product(it)
 		qty = safe_flt(it.get("quantity") or 1, default=1.0)
-		rate = safe_flt(it.get("calc_msp") or it.get("unit_price") or it.get("standard_rate") or 0.0)
+		# Match exact rate that made up the order's subtotal
+		rate = safe_flt(it.get("school_unit_price") or it.get("calc_msp") or it.get("unit_price") or it.get("standard_rate") or 0.0)
 		item_title = it.get("website_display_name") or it.get("product_name") or item_code
 		category = it.get("category_name") or it.get("category") or "Garments"
 		gst_hsn = get_valid_hsn_for_item(category)
